@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LTAR Flow · LENS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   LENS DESIGN SYSTEM — Arvato
+   LTAR Flow · İş & Talep Yönetimi
+═══════════════════════════════════════ */
+:root {
+  --arvato:       #0078BE;
+  --arvato-dark:  #005A8E;
+  --arvato-light: #E6F3FB;
+  --arvato-mid:   #3399CC;
+
+  --bg:           #F0F4F8;
+  --surface:      #FFFFFF;
+  --border:       #DDE3EC;
+  --border-lt:    #EEF1F5;
+
+  --text:         #0D1F2D;
+  --text-soft:    #64748B;
+  --text-hint:    #94A3B8;
+
+  --sidebar-bg:   #1A2E44;
+  --sw:           248px;
+  --hh:           52px;
+
+  /* Ekip renkleri */
+  --lean:         #0078BE;
+  --lean-lt:      #E6F3FB;
+  --training:     #1A7A4A;
+  --training-lt:  #DCFCE7;
+  --analytics:    #D97706;
+  --analytics-lt: #FEF3C7;
+
+  /* İş türü renkleri */
+  --planned:      #6D28D9;
+  --planned-lt:   #EDE9FE;
+  --request:      #0078BE;
+  --request-lt:   #E6F3FB;
+  --routine:      #1A7A4A;
+  --routine-lt:   #DCFCE7;
+  --meeting:      #D97706;
+  --meeting-lt:   #FEF3C7;
+
+  /* Durum */
+  --s-open:       #0078BE;
+  --s-prog:       #D97706;
+  --s-review:     #6D28D9;
+  --s-done:       #1A7A4A;
+  --s-cancel:     #94A3B8;
+
+  /* Öncelik */
+  --p-critical:   #B91C1C;
+  --p-high:       #f97316;
+  --p-medium:     #eab308;
+  --p-low:        #1A7A4A;
+
+  --r:  8px;
+  --rl: 12px;
+  --sh: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --sh2: 0 4px 14px rgba(0,0,0,.09);
+  --sh3: 0 20px 48px rgba(0,0,0,.16);
+  --tr: .17s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+/* ── LOGIN ── */
+#login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--sidebar-bg); position: relative; overflow: hidden;
+}
+#login-screen::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 65% 35%, rgba(0,120,190,.3) 0%, transparent 60%);
+}
+.lc {
+  background: var(--surface); border-radius: var(--rl); padding: 36px 40px;
+  width: 420px; box-shadow: var(--sh3); position: relative; z-index: 1;
+  border: 1px solid var(--border);
+}
+.lc-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-lt); }
+.lc-logo {
+  width: 40px; height: 40px; background: var(--arvato); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white; letter-spacing: -.5px;
+}
+.lc-name { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -.2px; }
+.lc-sub  { font-size: 11px; color: var(--text-soft); margin-top: 1px; }
+.lc-lens { display: inline-flex; align-items: center; gap: 4px; background: var(--arvato-light); color: var(--arvato-dark); padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; margin-top: 4px; }
+.lc-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.lc-hint  { font-size: 12.5px; color: var(--text-soft); margin-bottom: 20px; }
+.lbl { font-size: 12px; font-weight: 600; color: var(--text-soft); display: block; margin-bottom: 5px; }
+.inp {
+  width: 100%; border: 1.5px solid var(--border); border-radius: var(--r);
+  padding: 10px 13px; font-size: 13.5px; font-family: 'Inter', sans-serif;
+  outline: none; color: var(--text); transition: all var(--tr); margin-bottom: 12px;
+}
+.inp:focus { border-color: var(--arvato); box-shadow: 0 0 0 3px rgba(0,120,190,.12); }
+.login-btn {
+  width: 100%; padding: 11px; background: var(--arvato); color: white;
+  border: none; border-radius: var(--r); font-size: 13.5px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer; transition: all var(--tr);
+}
+.login-btn:hover { background: var(--arvato-dark); box-shadow: var(--sh2); transform: translateY(-1px); }
+.divider { border: none; border-top: 1px solid var(--border-lt); margin: 16px 0; }
+.qlbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text-hint); margin-bottom: 8px; }
+.qusers { display: flex; flex-direction: column; gap: 5px; max-height: 280px; overflow-y: auto; }
+.qbtn {
+  display: flex; align-items: center; gap: 10px; padding: 8px 11px;
+  border: 1.5px solid var(--border); border-radius: var(--r);
+  background: none; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: all var(--tr); text-align: left; font-size: 13px; color: var(--text);
+}
+.qbtn:hover { border-color: var(--arvato); background: var(--arvato-light); }
+
+/* ── LAYOUT ── */
+#app { display: none; }
+.sidebar {
+  position: fixed; top: 0; left: 0; width: var(--sw); height: 100vh;
+  background: var(--sidebar-bg); display: flex; flex-direction: column; z-index: 100;
+}
+.sb-logo {
+  height: var(--hh); padding: 0 16px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
+}
+.sb-logo-mark {
+  width: 28px; height: 28px; border-radius: 6px; background: var(--arvato);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: white; letter-spacing: -.5px; flex-shrink: 0;
+}
+.sb-logo-text { line-height: 1.2; }
+.sb-logo-name { font-size: 13px; font-weight: 700; color: white; letter-spacing: -.1px; }
+.sb-logo-sub  { font-size: 9.5px; color: rgba(255,255,255,.35); letter-spacing: .2px; }
+
+.sb-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+.sb-sec { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.28); padding: 12px 16px 4px; }
+.sb-item {
+  display: flex; align-items: center; gap: 9px; padding: 8px 16px;
+  font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,.55);
+  cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+  transition: all var(--tr); position: relative;
+}
+.sb-item:hover { color: white; background: rgba(255,255,255,.07); }
+.sb-item.active { color: white; background: rgba(0,120,190,.25); }
+.sb-item.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--arvato-mid); border-radius: 0 2px 2px 0; }
+.sb-icon { font-size: 13px; width: 17px; text-align: center; flex-shrink: 0; }
+.sb-badge { margin-left: auto; background: var(--arvato); color: white; font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 20px; min-width: 17px; text-align: center; font-family: 'JetBrains Mono', monospace; }
+.sb-badge.red { background: var(--p-critical); }
+.sb-badge.amber { background: var(--p-high); }
+
+/* Ekip renkli çizgiler sidebar'da */
+.sb-team-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.sb-foot { padding: 10px 13px; border-top: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.sb-av { width: 29px; height: 29px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; flex-shrink: 0; }
+.sb-uname { font-size: 12px; font-weight: 600; color: white; }
+.sb-urole { font-size: 10px; color: rgba(255,255,255,.38); }
+.sb-logout { margin-left: auto; background: none; border: none; color: rgba(255,255,255,.3); cursor: pointer; font-size: 14px; border-radius: 4px; padding: 3px; transition: color var(--tr); }
+.sb-logout:hover { color: white; }
+
+.topbar {
+  position: fixed; top: 0; left: var(--sw); right: 0; height: var(--hh);
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px; padding: 0 22px;
+  z-index: 90; box-shadow: var(--sh);
+}
+.tb-title { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; letter-spacing: -.2px; }
+.tb-search {
+  display: flex; align-items: center; gap: 7px; background: var(--bg);
+  border: 1.5px solid var(--border); border-radius: var(--r); padding: 6px 11px; width: 210px; transition: all var(--tr);
+}
+.tb-search:focus-within { border-color: var(--arvato); background: white; box-shadow: 0 0 0 3px rgba(0,120,190,.10); }
+.tb-search input { border: none; background: none; outline: none; font-size: 12.5px; font-family: 'Inter', sans-serif; width: 100%; color: var(--text); }
+.tb-search input::placeholder { color: var(--text-hint); }
+
+/* Role / team pill */
+.rpill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.rp-admin    { background: var(--arvato-light); color: var(--arvato-dark); }
+.rp-manager  { background: var(--training-lt); color: var(--training); }
+.rp-member   { background: var(--planned-lt); color: var(--planned); }
+.rp-external { background: var(--analytics-lt); color: var(--analytics); }
+
+.main { margin-left: var(--sw); padding-top: var(--hh); min-height: 100vh; }
+.page { display: none; padding: 22px; animation: fu .18s ease; }
+.page.active { display: block; }
+@keyframes fu { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 15px; border-radius: var(--r); border: none; font-size: 12.5px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all var(--tr); white-space: nowrap; letter-spacing: -.1px; }
+.btn-primary   { background: var(--arvato); color: white; }
+.btn-primary:hover { background: var(--arvato-dark); transform: translateY(-1px); box-shadow: var(--sh2); }
+.btn-secondary { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); }
+.btn-secondary:hover { background: var(--bg); border-color: var(--arvato); color: var(--arvato); }
+.btn-ghost { background: none; color: var(--text-soft); border: none; }
+.btn-ghost:hover { background: var(--bg); color: var(--text); }
+.btn-danger { background: #fef2f2; color: var(--p-critical); border: 1.5px solid #fecaca; }
+.btn-sm { padding: 5px 11px; font-size: 12px; }
+.btn-xs { padding: 3px 7px; font-size: 11px; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border-radius: var(--rl); border: 1px solid var(--border); box-shadow: var(--sh); overflow: hidden; }
+.card-head { padding: 13px 18px; border-bottom: 1px solid var(--border-lt); display: flex; align-items: center; gap: 10px; }
+.card-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; letter-spacing: -.1px; }
+
+/* ── PAGE HEADER ── */
+.ph { margin-bottom: 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.ph-title { font-size: 19px; font-weight: 700; color: var(--text); letter-spacing: -.4px; }
+.ph-sub { font-size: 12.5px; color: var(--text-soft); margin-top: 3px; }
+
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(6,1fr); gap: 11px; margin-bottom: 18px; }
+.stat {
+  background: var(--surface); border-radius: var(--rl); border: 1px solid var(--border);
+  box-shadow: var(--sh); padding: 14px 16px; position: relative; overflow: hidden;
+}
+.stat-top { width: 100%; height: 3px; border-radius: 3px 3px 0 0; position: absolute; top: 0; left: 0; }
+.stat-lbl { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text-soft); margin-bottom: 6px; margin-top: 4px; }
+.stat-val { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -1px; font-family: 'JetBrains Mono', monospace; }
+.stat-meta { font-size: 10.5px; color: var(--text-hint); margin-top: 3px; }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 8px 14px; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--text-soft); background: var(--bg); border-bottom: 1px solid var(--border); white-space: nowrap; }
+td { padding: 10px 14px; font-size: 12.5px; color: var(--text-soft); border-bottom: 1px solid var(--border-lt); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--arvato-light); cursor: pointer; }
+.tid { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--arvato); font-weight: 500; background: var(--arvato-light); padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+.ttitle { font-weight: 600; color: var(--text); max-width: 240px; }
+.ttitle small { display: block; font-size: 11px; color: var(--text-hint); font-weight: 400; margin-top: 2px; }
+
+/* ── BADGES ── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.b-open     { background: var(--arvato-light); color: var(--arvato-dark); } .b-open::before { background: var(--arvato); }
+.b-prog     { background: var(--analytics-lt); color: var(--analytics); } .b-prog::before { background: var(--analytics); }
+.b-review   { background: var(--planned-lt); color: var(--planned); } .b-review::before { background: var(--planned); }
+.b-done     { background: var(--training-lt); color: var(--training); } .b-done::before { background: var(--training); }
+.b-cancel   { background: var(--bg); color: var(--text-hint); } .b-cancel::before { background: var(--text-hint); }
+
+/* İş türü badge */
+.type-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 600; }
+.t-planned   { background: var(--planned-lt); color: var(--planned); }
+.t-request   { background: var(--request-lt); color: var(--request); }
+.t-routine   { background: var(--routine-lt); color: var(--routine); }
+.t-meeting   { background: var(--meeting-lt); color: var(--meeting); }
+
+/* Öncelik */
+.prio { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; }
+.prio::before { content: ''; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.pc::before { background: var(--p-critical); } .ph::before { background: var(--p-high); }
+.pm::before { background: var(--p-medium); }  .pl::before { background: var(--p-low); }
+
+/* Ekip tag */
+.team-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 20px; font-size: 10.5px; font-weight: 700; }
+
+/* ── SLA ── */
+.sla { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; white-space: nowrap; }
+.sla-ok     { background: var(--training-lt); color: var(--training); }
+.sla-warn   { background: var(--analytics-lt); color: var(--analytics); }
+.sla-breach { background: #fef2f2; color: var(--p-critical); }
+.sla-done   { background: var(--bg); color: var(--text-hint); }
+.sla-pulse  { animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+
+/* ── KANBAN ── */
+.kb-board { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; align-items: start; }
+.k-col { background: var(--bg); border-radius: var(--rl); border: 1px solid var(--border); min-height: 380px; }
+.k-col-head { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; }
+.k-col-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.k-col-cnt { margin-left: auto; font-size: 10px; font-weight: 700; background: var(--border); color: var(--text-soft); padding: 1px 6px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+.k-cards { padding: 8px; display: flex; flex-direction: column; gap: 7px; }
+.k-card { background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border); padding: 10px 11px; cursor: pointer; transition: all var(--tr); box-shadow: var(--sh); }
+.k-card:hover { box-shadow: var(--sh2); transform: translateY(-2px); border-color: var(--arvato); }
+.k-card-id { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--arvato); margin-bottom: 4px; }
+.k-card-title { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 7px; }
+.k-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+
+/* ── AVATARS ── */
+.av-stack { display: flex; }
+.av-stack .av { margin-left: -5px; border: 2px solid white; }
+.av-stack .av:first-child { margin-left: 0; }
+.av { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 700; color: white; flex-shrink: 0; }
+.av-md { width: 30px; height: 30px; font-size: 11px; }
+.av-lg { width: 36px; height: 36px; font-size: 13px; }
+
+/* ── FILTER BAR ── */
+.fbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.fbar select { border: 1.5px solid var(--border); border-radius: var(--r); padding: 6px 10px; font-size: 12px; font-family: 'Inter', sans-serif; outline: none; background: var(--surface); color: var(--text); transition: border-color var(--tr); }
+.fbar select:focus { border-color: var(--arvato); }
+.fbar .sbox { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 6px 11px; flex: 1; max-width: 230px; }
+.fbar .sbox:focus-within { border-color: var(--arvato); }
+.fbar .sbox input { border: none; outline: none; font-size: 12.5px; font-family: 'Inter', sans-serif; width: 100%; background: none; color: var(--text); }
+.fbar .sbox input::placeholder { color: var(--text-hint); }
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 3px; margin-bottom: 16px; width: fit-content; }
+.tab { padding: 6px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600; color: var(--text-soft); cursor: pointer; transition: all var(--tr); border: none; background: none; font-family: 'Inter', sans-serif; }
+.tab.active { background: var(--surface); color: var(--text); box-shadow: var(--sh); }
+.tab:hover:not(.active) { color: var(--text); background: rgba(255,255,255,.5); }
+
+/* ── MODAL ── */
+.overlay { position: fixed; inset: 0; background: rgba(13,31,45,.6); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity var(--tr); }
+.overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border-radius: var(--rl); box-shadow: var(--sh3); width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; transform: scale(.96) translateY(8px); transition: transform var(--tr); border: 1px solid var(--border); }
+.overlay.open .modal { transform: none; }
+.modal-head { padding: 18px 22px 13px; border-bottom: 1px solid var(--border-lt); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+.modal-title { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; letter-spacing: -.2px; }
+.modal-body { padding: 22px; }
+.modal-foot { padding: 12px 22px; border-top: 1px solid var(--border-lt); display: flex; gap: 9px; justify-content: flex-end; position: sticky; bottom: 0; background: var(--surface); }
+
+/* ── DETAIL MODAL ── */
+.det-modal { max-width: 860px; }
+.det-layout { display: grid; grid-template-columns: 1fr 268px; }
+.det-main { padding: 22px; min-width: 0; border-right: 1px solid var(--border-lt); }
+.det-side { padding: 18px; background: var(--bg); }
+.det-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 8px; letter-spacing: -.3px; }
+.det-desc  { font-size: 13px; line-height: 1.75; color: var(--text-soft); white-space: pre-wrap; }
+.mg { margin-bottom: 13px; }
+.ml { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text-hint); margin-bottom: 4px; }
+.mv { font-size: 12.5px; color: var(--text); }
+
+/* SLA bar */
+.sla-card { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); padding: 11px; margin-bottom: 13px; }
+.sla-bw { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; margin: 5px 0; }
+.sla-bf { height: 100%; border-radius: 99px; transition: width .6s ease; }
+
+/* Attachments */
+.att-area { margin-top: 18px; }
+.sec-lbl { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+.sec-lbl small { font-weight: 400; color: var(--text-hint); font-size: 11px; }
+.att-drop { border: 2px dashed var(--border); border-radius: var(--r); padding: 16px; text-align: center; cursor: pointer; transition: all var(--tr); background: var(--bg); position: relative; }
+.att-drop:hover, .att-drop.dov { border-color: var(--arvato); background: var(--arvato-light); }
+.att-drop input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.att-list { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+.att-item { display: flex; align-items: center; gap: 8px; padding: 8px 11px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); font-size: 12.5px; }
+.att-name { flex: 1; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.att-size { font-size: 10.5px; color: var(--text-hint); font-family: 'JetBrains Mono', monospace; }
+.att-del { background: none; border: none; color: var(--text-hint); cursor: pointer; font-size: 14px; padding: 2px 4px; border-radius: 3px; transition: color var(--tr); }
+.att-del:hover { color: var(--p-critical); }
+.att-dl { background: none; border: none; color: var(--arvato); cursor: pointer; font-size: 12px; padding: 2px 6px; font-weight: 600; font-family: 'Inter', sans-serif; }
+
+/* Observers */
+.obs-area { margin-top: 14px; }
+.obs-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 7px; }
+.obs-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 11.5px; color: var(--text-soft); }
+.obs-del { background: none; border: none; cursor: pointer; color: var(--text-hint); font-size: 13px; padding: 0; transition: color var(--tr); }
+.obs-del:hover { color: var(--p-critical); }
+.obs-add { display: flex; gap: 7px; align-items: center; }
+.obs-add input { flex: 1; border: 1.5px solid var(--border); border-radius: var(--r); padding: 6px 11px; font-size: 12.5px; font-family: 'Inter', sans-serif; outline: none; transition: border-color var(--tr); color: var(--text); }
+.obs-add input:focus { border-color: var(--arvato); }
+
+/* Comments */
+.cmt-area { margin-top: 20px; }
+.cmt-item { display: flex; gap: 9px; margin-bottom: 11px; }
+.cmt-who { font-size: 12px; font-weight: 600; color: var(--text); }
+.cmt-when { font-size: 10.5px; color: var(--text-hint); margin-left: 5px; font-family: 'JetBrains Mono', monospace; }
+.cmt-txt { font-size: 12.5px; color: var(--text-soft); line-height: 1.65; background: var(--bg); padding: 8px 11px; border-radius: 0 var(--r) var(--r) var(--r); border: 1px solid var(--border-lt); margin-top: 4px; }
+.cmt-row { display: flex; gap: 8px; align-items: flex-end; margin-top: 10px; }
+.cmt-row textarea { flex: 1; border: 1.5px solid var(--border); border-radius: var(--r); padding: 8px 11px; font-size: 12.5px; font-family: 'Inter', sans-serif; resize: none; height: 62px; outline: none; color: var(--text); transition: border-color var(--tr); }
+.cmt-row textarea:focus { border-color: var(--arvato); box-shadow: 0 0 0 3px rgba(0,120,190,.10); }
+
+/* ── FORM ── */
+.fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 13px; }
+.fg label { font-size: 12px; font-weight: 600; color: var(--text-soft); }
+.fc { border: 1.5px solid var(--border); border-radius: var(--r); padding: 9px 12px; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--text); outline: none; background: var(--surface); transition: all var(--tr); width: 100%; }
+.fc:focus { border-color: var(--arvato); box-shadow: 0 0 0 3px rgba(0,120,190,.10); }
+textarea.fc { resize: vertical; min-height: 85px; }
+.fr { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fr3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+/* Multi-assignee */
+.mav { display: flex; flex-wrap: wrap; gap: 5px; }
+.av-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 20px; background: var(--bg); color: var(--text-soft); font-size: 12px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); transition: all var(--tr); }
+.av-chip:hover { border-color: var(--arvato); color: var(--arvato); background: var(--arvato-light); }
+.av-chip.sel { background: var(--arvato-light); color: var(--arvato-dark); border-color: var(--arvato); font-weight: 600; }
+
+/* ── DASHBOARD CHARTS ── */
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr 280px; gap: 14px; }
+.mini-chart { display: flex; flex-direction: column; gap: 6px; padding: 4px 0; }
+.mc-row { display: flex; align-items: center; gap: 8px; }
+.mc-label { font-size: 11.5px; font-weight: 500; color: var(--text-soft); width: 120px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mc-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.mc-bar { height: 100%; border-radius: 99px; transition: width .6s ease; }
+.mc-val { font-size: 11px; font-weight: 700; color: var(--text-soft); width: 24px; text-align: right; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+
+/* ── ACTIVITY ── */
+.act-item { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; border-left: 2px solid var(--border); padding-left: 12px; margin-left: 8px; position: relative; font-size: 12.5px; color: var(--text-soft); }
+.act-item::before { content: ''; position: absolute; left: -5px; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--arvato); border: 2px solid white; }
+.act-time { font-size: 10px; color: var(--text-hint); margin-left: auto; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+
+/* ── TEAM PAGE ── */
+.team-section { margin-bottom: 24px; }
+.ts-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.ts-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -.2px; }
+.mc-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 10px; }
+.mc-card { background: var(--surface); border-radius: var(--rl); border: 1px solid var(--border); padding: 15px; box-shadow: var(--sh); }
+.mc-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
+.mc-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.mc-role-txt { font-size: 11px; color: var(--text-soft); }
+.mst { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+.ms { text-align: center; padding: 6px 5px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border-lt); }
+.ms-val { font-size: 15px; font-weight: 700; color: var(--arvato); font-family: 'JetBrains Mono', monospace; }
+.ms-lbl { font-size: 9px; color: var(--text-hint); text-transform: uppercase; letter-spacing: .5px; margin-top: 1px; font-weight: 700; }
+
+/* ── SETTINGS ── */
+.set-layout { display: grid; grid-template-columns: 185px 1fr; gap: 16px; }
+.set-menu { display: flex; flex-direction: column; gap: 2px; }
+.set-mi { padding: 8px 12px; border-radius: var(--r); font-size: 12.5px; cursor: pointer; color: var(--text-soft); transition: all var(--tr); font-weight: 500; }
+.set-mi:hover { background: var(--bg); color: var(--text); }
+.set-mi.active { background: var(--arvato-light); color: var(--arvato-dark); font-weight: 600; }
+.set-sec { display: none; } .set-sec.active { display: block; }
+.set-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--rl); padding: 20px; margin-bottom: 12px; }
+.st { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.sd { font-size: 12.5px; color: var(--text-soft); margin-bottom: 15px; line-height: 1.6; }
+.sla-tbl { width: 100%; border-collapse: collapse; }
+.sla-tbl th { text-align: left; padding: 7px 11px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text-soft); background: var(--bg); border-bottom: 1px solid var(--border); }
+.sla-tbl td { padding: 9px 11px; border-bottom: 1px solid var(--border-lt); font-size: 12.5px; }
+.sla-tbl input[type=number] { width: 72px; border: 1.5px solid var(--border); border-radius: 6px; padding: 5px 7px; font-family: 'JetBrains Mono', monospace; font-size: 13px; outline: none; }
+.sla-tbl input:focus { border-color: var(--arvato); }
+.code-block { background: var(--sidebar-bg); border-radius: var(--r); padding: 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93c5fd; overflow-x: auto; white-space: pre; margin-bottom: 11px; border: 1px solid rgba(255,255,255,.06); }
+
+/* ── INFO BOX ── */
+.info-box { background: var(--arvato-light); border: 1px solid #bfdbfe; border-radius: var(--r); padding: 10px 13px; font-size: 12.5px; color: var(--arvato-dark); margin-bottom: 13px; }
+
+/* ── EXT HERO ── */
+.ext-hero { background: linear-gradient(135deg, var(--sidebar-bg) 0%, #1e4d8c 100%); border-radius: var(--rl); padding: 22px 26px; margin-bottom: 16px; color: white; border: 1px solid rgba(255,255,255,.08); }
+.ext-hero-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; letter-spacing: -.3px; }
+.ext-hero-sub { font-size: 12.5px; opacity: .65; }
+
+/* ── TOAST ── */
+.toast-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 7px; }
+.toast { display: flex; align-items: center; gap: 10px; background: var(--sidebar-bg); color: white; padding: 11px 15px; border-radius: var(--r); box-shadow: var(--sh3); min-width: 255px; max-width: 360px; font-size: 13px; animation: tIn .2s ease; border: 1px solid rgba(255,255,255,.08); }
+.toast.ok   { border-left: 3px solid var(--training); }
+.toast.err  { border-left: 3px solid var(--p-critical); }
+.toast.info { border-left: 3px solid var(--arvato); }
+@keyframes tIn { from { opacity:0; transform:translateX(13px); } to { opacity:1; transform:none; } }
+
+/* ── MISC ── */
+.divider { border: none; border-top: 1px solid var(--border-lt); margin: 13px 0; }
+.tag { display: inline-flex; background: var(--bg); color: var(--text-soft); padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 500; margin: 2px; border: 1px solid var(--border-lt); }
+.lens-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--arvato-light); color: var(--arvato-dark); padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; border: 1px solid #bfdbfe; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Overdue highlight */
+tr.overdue td { background: #fff8f8; }
+tr.overdue:hover td { background: #fee2e2; }
+
+@media(max-width:1200px) { .stats { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:1100px) { .kb-board { grid-template-columns: repeat(3,1fr); } .dash-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:900px)  { .stats { grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="lc">
+    <div class="lc-brand">
+      <div class="lc-logo">LF</div>
+      <div>
+        <div class="lc-name">LTAR Flow</div>
+        <div class="lc-sub">Lean · Training · Analytics & Reporting</div>
+        <div><span class="lc-lens">🔗 LENS</span></div>
+      </div>
+    </div>
+    <div class="lc-title">Giriş Yap</div>
+    <div class="lc-hint">Kurumsal e-posta adresinizle devam edin</div>
+    <label class="lbl">E-posta Adresi</label>
+    <input class="inp" id="login-email" type="email" placeholder="ad.soyad@arvato.com" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Devam Et →</button>
+    <div class="divider"></div>
+    <div class="qlbl">Demo kullanıcıları</div>
+    <div class="qusers" id="quick-users"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">LF</div>
+      <div class="sb-logo-text">
+        <div class="sb-logo-name">LTAR Flow</div>
+        <div class="sb-logo-sub">LENS · İş & Talep Yönetimi</div>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-foot">
+      <div class="sb-av" id="sb-av"></div>
+      <div><div class="sb-uname" id="sb-name"></div><div class="sb-urole" id="sb-role"></div></div>
+      <button class="sb-logout" onclick="logout()" title="Çıkış">⏻</button>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <div class="tb-title" id="tb-title">Dashboard</div>
+    <div class="tb-search"><span style="color:var(--text-hint);font-size:13px">⌕</span><input type="text" placeholder="İş veya talep ara..." oninput="gSearch(this.value)"></div>
+    <span class="lens-badge">🔗 LENS</span>
+    <span class="rpill" id="tb-rp"></span>
+  </header>
+
+  <main class="main">
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="page active" id="pg-dashboard">
+      <div class="ph">
+        <div><div class="ph-title">Dashboard</div><div class="ph-sub" id="dash-sub"></div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary" onclick="nav('requests')" id="btn-dash-req" style="display:none">📬 Gelen Talepler <span id="dash-req-cnt" style="background:var(--p-critical);color:white;padding:1px 6px;border-radius:20px;font-size:10px;margin-left:4px"></span></button>
+          <button class="btn btn-primary" id="btn-dash-new" onclick="openNewWork()">＋ Yeni İş</button>
+        </div>
+      </div>
+      <div class="stats" id="dash-stats"></div>
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-head"><div class="card-title">Aktif İşler</div><button class="btn btn-sm btn-ghost" onclick="nav('works')">Tümü →</button></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>ID</th><th>Başlık</th><th>Tür</th><th>Ekip</th><th>Durum</th><th>SLA</th><th>Atanan</th></tr></thead>
+            <tbody id="dash-table"></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Ekip İş Yükü</div></div>
+          <div style="padding:16px"><div class="mini-chart" id="workload-chart"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Aktivite</div></div>
+          <div id="dash-act" style="padding:13px;max-height:340px;overflow-y:auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TÜM İŞLER ══ -->
+    <div class="page" id="pg-works">
+      <div class="ph">
+        <div><div class="ph-title">İşler</div><div class="ph-sub">Planlı işler, projeler, rutinler ve toplantı aksiyonları</div></div>
+        <button class="btn btn-primary" id="btn-works-new" onclick="openNewWork()">＋ Yeni İş</button>
+      </div>
+      <div class="tabs" id="works-tabs">
+        <button class="tab active" onclick="switchWorkTab('all',this)">Tümü</button>
+        <button class="tab" onclick="switchWorkTab('planned',this)">📌 Planlı</button>
+        <button class="tab" onclick="switchWorkTab('routine',this)">🔄 Rutin</button>
+        <button class="tab" onclick="switchWorkTab('meeting',this)">📅 Toplantı & Aksiyon</button>
+      </div>
+      <div class="fbar">
+        <div class="sbox"><span style="color:var(--text-hint)">⌕</span><input type="text" placeholder="Ara..." id="work-search" oninput="filterWorks()"></div>
+        <select id="f-team" onchange="filterWorks()"><option value="">Tüm Ekipler</option><option>Lean</option><option>Training</option><option>Analytics & Reporting</option></select>
+        <select id="f-status" onchange="filterWorks()"><option value="">Tüm Durumlar</option><option>Açık</option><option>Devam Ediyor</option><option>İncelemede</option><option>Tamamlandı</option><option>İptal</option></select>
+        <select id="f-prio" onchange="filterWorks()"><option value="">Öncelik</option><option>Kritik</option><option>Yüksek</option><option>Orta</option><option>Düşük</option></select>
+        <select id="f-sla" onchange="filterWorks()"><option value="">SLA</option><option value="breach">İhlal</option><option value="warn">Uyarı</option><option value="ok">Normal</option></select>
+        <button class="btn btn-ghost btn-sm" onclick="clearFilters()">✕</button>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>ID</th><th>Başlık</th><th>Tür</th><th>Ekip</th><th>Durum</th><th>Öncelik</th><th>SLA</th><th>Atanan</th><th>Son Tarih</th><th></th></tr></thead>
+          <tbody id="works-table"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ TALEPLER ══ -->
+    <div class="page" id="pg-requests">
+      <div class="ph">
+        <div><div class="ph-title">Gelen Talepler</div><div class="ph-sub">Dış departmanlardan gelen ölçüm, eğitim ve rapor talepleri</div></div>
+        <button class="btn btn-primary" onclick="openNewRequest()">＋ Talep Aç</button>
+      </div>
+      <div class="fbar">
+        <div class="sbox"><span style="color:var(--text-hint)">⌕</span><input type="text" placeholder="Talep ara..." id="req-search" oninput="filterRequests()"></div>
+        <select id="f-req-type" onchange="filterRequests()">
+          <option value="">Tüm Talep Türleri</option>
+          <option value="Ölçüm">📐 Ölçüm (Lean)</option>
+          <option value="Eğitim">📚 Eğitim (Training)</option>
+          <option value="Rapor">📊 Rapor (Analytics)</option>
+          <option value="Proje Desteği">🤝 Proje Desteği</option>
+          <option value="Diğer">Diğer</option>
+        </select>
+        <select id="f-req-status" onchange="filterRequests()"><option value="">Tüm Durumlar</option><option>Beklemede</option><option>Değerlendiriliyor</option><option>Devam Ediyor</option><option>Tamamlandı</option><option>Reddedildi</option></select>
+        <button class="btn btn-ghost btn-sm" onclick="clearReqFilters()">✕</button>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>ID</th><th>Talep</th><th>Tür</th><th>Talep Eden</th><th>Departman</th><th>Hedef Ekip</th><th>Durum</th><th>Tarih</th><th></th></tr></thead>
+          <tbody id="req-table"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ KANBAN ══ -->
+    <div class="page" id="pg-kanban">
+      <div class="ph">
+        <div><div class="ph-title">Kanban Board</div><div class="ph-sub">Sürükle-bırak ile durum güncelle</div></div>
+        <button class="btn btn-primary" onclick="openNewWork()">＋ Yeni İş</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:13px">
+        <select id="kb-team" onchange="renderKanban()" style="border:1.5px solid var(--border);border-radius:var(--r);padding:6px 10px;font-size:12px;font-family:'Inter',sans-serif;outline:none;background:var(--surface);color:var(--text)">
+          <option value="">Tüm Ekipler</option><option>Lean</option><option>Training</option><option>Analytics & Reporting</option>
+        </select>
+        <select id="kb-type" onchange="renderKanban()" style="border:1.5px solid var(--border);border-radius:var(--r);padding:6px 10px;font-size:12px;font-family:'Inter',sans-serif;outline:none;background:var(--surface);color:var(--text)">
+          <option value="">Tüm Türler</option><option>Planlı İş</option><option>Dış Talep</option><option>Rutin</option><option>Toplantı & Aksiyon</option>
+        </select>
+      </div>
+      <div class="kb-board" id="kanban-board"></div>
+    </div>
+
+    <!-- ══ EKİP ══ -->
+    <div class="page" id="pg-team">
+      <div class="ph">
+        <div><div class="ph-title">Ekip</div><div class="ph-sub">Lean · Training · Analytics & Reporting</div></div>
+        <button class="btn btn-primary" id="btn-add-member" onclick="openAddMember()">＋ Üye Ekle</button>
+      </div>
+      <div id="team-content"></div>
+    </div>
+
+    <!-- ══ BENİM İŞLERİM ══ -->
+    <div class="page" id="pg-mine">
+      <div class="ext-hero">
+        <div class="ext-hero-title" id="mine-greet">Hoş geldiniz</div>
+        <div class="ext-hero-sub">Atanan işleriniz, açtığınız talepler ve takip ettikleriniz</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card">
+          <div class="card-head"><div class="card-title">📋 Bana Atanan İşler</div></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>ID</th><th>Başlık</th><th>Durum</th><th>SLA</th></tr></thead>
+            <tbody id="mine-works-table"></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">📬 Açtığım Talepler</div><button class="btn btn-sm btn-primary" onclick="openNewRequest()">＋</button></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>ID</th><th>Talep</th><th>Tür</th><th>Durum</th></tr></thead>
+            <tbody id="mine-req-table"></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ AYARLAR ══ -->
+    <div class="page" id="pg-settings">
+      <div class="ph"><div><div class="ph-title">Ayarlar</div><div class="ph-sub">SLA, kullanıcılar, bildirimler, LENS & SharePoint entegrasyonu</div></div></div>
+      <div class="set-layout">
+        <div class="set-menu">
+          <div class="set-mi active" onclick="stab('sla',this)">⏱ SLA</div>
+          <div class="set-mi" onclick="stab('users',this)">👥 Kullanıcılar</div>
+          <div class="set-mi" onclick="stab('notif',this)">📧 Bildirimler</div>
+          <div class="set-mi" onclick="stab('lens',this)">🔗 LENS Entegrasyonu</div>
+          <div class="set-mi" onclick="stab('sp',this)">☁️ SharePoint</div>
+        </div>
+        <div>
+          <div class="set-sec active" id="sec-sla">
+            <div class="set-block">
+              <div class="st">SLA Süreleri</div>
+              <div class="sd">İş türüne göre varsayılan SLA süreleri. Her işe ayrıca özel süre atanabilir.</div>
+              <table class="sla-tbl">
+                <thead><tr><th>Öncelik</th><th>Varsayılan (saat)</th><th>Uyarı Eşiği (%)</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="prio pc">Kritik</span></td><td><input type="number" id="sla-c" value="4"></td><td><input type="number" id="slw-c" value="75"></td></tr>
+                  <tr><td><span class="prio ph">Yüksek</span></td><td><input type="number" id="sla-h" value="24"></td><td><input type="number" id="slw-h" value="75"></td></tr>
+                  <tr><td><span class="prio pm">Orta</span></td><td><input type="number" id="sla-m" value="72"></td><td><input type="number" id="slw-m" value="75"></td></tr>
+                  <tr><td><span class="prio pl">Düşük</span></td><td><input type="number" id="sla-l" value="168"></td><td><input type="number" id="slw-l" value="75"></td></tr>
+                </tbody>
+              </table>
+              <button class="btn btn-primary" style="margin-top:12px" onclick="saveSLA()">Kaydet</button>
+            </div>
+          </div>
+          <div class="set-sec" id="sec-users">
+            <div class="set-block">
+              <div class="st">Kullanıcı Yönetimi</div>
+              <div class="sd">LTAR ekip üyeleri ve dış talep gönderebilecek kullanıcılar.</div>
+              <div id="users-tbl"></div>
+              <button class="btn btn-primary" style="margin-top:12px" onclick="openAddMember()">＋ Kullanıcı Ekle</button>
+            </div>
+          </div>
+          <div class="set-sec" id="sec-notif">
+            <div class="set-block">
+              <div class="st">Power Automate Bildirimleri</div>
+              <div class="sd">Her olay için ayrı webhook. Atanan + gözlemci + talep sahibine Outlook maili gönderilir.</div>
+              <div class="fg"><label>📬 Yeni İş / Talep</label><input class="fc" id="pa-new" placeholder="https://prod-xx.logic.azure.com/..."></div>
+              <div class="fg"><label>👤 Atama Değişikliği</label><input class="fc" id="pa-assign" placeholder="https://prod-xx.logic.azure.com/..."></div>
+              <div class="fg"><label>🔄 Durum Değişikliği</label><input class="fc" id="pa-status" placeholder="https://prod-xx.logic.azure.com/..."></div>
+              <div class="fg"><label>💬 Yorum Eklendi</label><input class="fc" id="pa-comment" placeholder="https://prod-xx.logic.azure.com/..."></div>
+              <div class="fg"><label>📎 Dosya Eklendi</label><input class="fc" id="pa-attach" placeholder="https://prod-xx.logic.azure.com/..."></div>
+              <div class="fg"><label>⏰ Termin Yaklaşıyor / Geçti</label><input class="fc" id="pa-deadline" placeholder="https://prod-xx.logic.azure.com/..."><small style="color:var(--text-hint);font-size:11px;margin-top:3px;display:block">Bu akış günlük olarak Power Automate Scheduler ile tetiklenir</small></div>
+              <button class="btn btn-primary" onclick="savePA()">Kaydet</button>
+            </div>
+            <div class="set-block">
+              <div class="st">⏰ Termin Bildirimi — Power Automate Akış Yapısı</div>
+              <div class="sd">Günlük çalışan zamanlama akışı. Termin yaklaştığında veya geçtiğinde otomatik mail gönderir. Başka hiçbir şeye gerek yok.</div>
+              <div id="deadline-guide"></div>
+            </div>
+          </div>
+          <div class="set-sec" id="sec-lens">
+            <div class="set-block">
+              <div class="st">LENS Portal Entegrasyonu</div>
+              <div class="sd">LTAR Flow'u LENS ana portalına eklemek için bu kodu <code style="font-family:'JetBrains Mono';font-size:12px;background:var(--bg);padding:1px 5px;border-radius:4px">portal.html</code>'e yapıştırın.</div>
+              <div class="code-block" id="lens-code"></div>
+              <button class="btn btn-secondary" onclick="copyCode('lens-code')">📋 Kopyala</button>
+            </div>
+            <div class="set-block">
+              <div class="st">iframe Gömme</div>
+              <div class="fg"><label>Bu dosyanın URL'si (GitHub Pages veya sunucu)</label><input class="fc" id="portal-url" placeholder="https://analyticsandreporting.github.io/LENS/ltar-flow.html" oninput="updateLensCode()"></div>
+              <div class="code-block" id="iframe-code"></div>
+              <button class="btn btn-secondary" onclick="copyCode('iframe-code')">📋 Kopyala</button>
+            </div>
+          </div>
+          <div class="set-sec" id="sec-sp">
+            <div class="set-block">
+              <div class="st">SharePoint — GEMBAWalk71</div>
+              <div class="sd">Mevcut LENS altyapısıyla aynı SharePoint sitesi kullanılır. <code style="font-family:'JetBrains Mono';font-size:12px;background:var(--bg);padding:1px 5px;border-radius:4px">Gorev_Master</code> listesi LTAR Flow için genişletilecek.</div>
+              <div class="fg"><label>Site URL</label><input class="fc" value="https://arvatoscs.sharepoint.com/teams/GEMBAWalk71" id="sp-url"></div>
+              <div class="fg"><label>Power Automate — LENS_GorevleriGetir URL</label><input class="fc" id="sp-getir" placeholder="Mevcut flow URL"></div>
+              <div class="fg"><label>Power Automate — LENS_GorevGuncelle URL</label><input class="fc" id="sp-guncelle" placeholder="Mevcut flow URL"></div>
+              <button class="btn btn-primary" onclick="toast('Bağlantı test ediliyor…','info');setTimeout(()=>toast('GEMBAWalk71 bağlantısı başarılı ✓','ok'),1400)">Bağlantıyı Test Et</button>
+              <div class="divider"></div>
+              <div class="st" style="margin-bottom:10px">Gorev_Master — Yeni Alanlar</div>
+              <div id="sp-schema"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══ YENİ İŞ MODAL ══ -->
+<div class="overlay" id="ov-work">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="work-modal-title">Yeni İş</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeOv('ov-work')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fr">
+        <div class="fg" style="grid-column:1/-1"><label>Başlık *</label><input class="fc" id="w-title" placeholder="İşi kısaca tanımlayın..."></div>
+      </div>
+      <div class="fg"><label>Açıklama</label><textarea class="fc" id="w-desc" placeholder="Detaylar, kapsam, beklentiler..."></textarea></div>
+      <div class="fr3">
+        <div class="fg"><label>İş Türü *</label>
+          <select class="fc" id="w-type">
+            <option value="Planlı İş">📌 Planlı İş / Proje</option>
+            <option value="Rutin">🔄 Rutin Görev</option>
+            <option value="Toplantı & Aksiyon">📅 Toplantı & Aksiyon</option>
+          </select>
+        </div>
+        <div class="fg"><label>Ekip *</label>
+          <select class="fc" id="w-team" onchange="onTeamChange()">
+            <option value="">Seçin...</option>
+            <option>Lean</option><option>Training</option><option>Analytics & Reporting</option>
+          </select>
+        </div>
+        <div class="fg"><label>Öncelik</label>
+          <select class="fc" id="w-prio" onchange="updateSLAPreview()">
+            <option>Orta</option><option>Düşük</option><option>Yüksek</option><option>Kritik</option>
+          </select>
+        </div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Son Tarih</label><input class="fc" type="date" id="w-due"></div>
+        <div class="fg" id="w-sla-wrap"><label>SLA Süresi (saat) <span style="font-weight:400;color:var(--text-hint)">— boş = varsayılan</span></label><input class="fc" type="number" id="w-sla" placeholder="Otomatik" min="1" oninput="updateSLAPreview()"></div>
+      </div>
+      <div id="w-sla-preview" style="display:none"><div class="info-box" id="w-sla-txt"></div></div>
+      <div class="fg" id="w-assign-wrap"><label>Atanacak Kişiler <span style="font-weight:400;color:var(--text-hint)">(birden fazla)</span></label><div class="mav" id="w-av-chips"></div></div>
+      <div class="fr">
+        <div class="fg"><label>Etiketler</label><input class="fc" id="w-tags" placeholder="ör: Q2, haftalık, KPI"></div>
+        <div class="fg" id="w-recur-wrap"><label>Tekrar</label>
+          <select class="fc" id="w-recur">
+            <option value="">Tekrar yok</option><option value="daily">Günlük</option>
+            <option value="weekly">Haftalık</option><option value="monthly">Aylık</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" onclick="closeOv('ov-work')">İptal</button>
+      <button class="btn btn-primary" id="w-submit" onclick="submitWork()">İş Oluştur</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ YENİ TALEP MODAL ══ -->
+<div class="overlay" id="ov-request">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Yeni Talep</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeOv('ov-request')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-box" id="req-info-box">📌 Talebiniz ilgili ekibe iletilecek ve en kısa sürede değerlendirilecektir.</div>
+      <div class="fg"><label>Talep Başlığı *</label><input class="fc" id="r-title" placeholder="Ne talep ediyorsunuz?"></div>
+      <div class="fg"><label>Açıklama & Gereksinimler</label><textarea class="fc" id="r-desc" placeholder="İhtiyacınızı, kapsamı ve beklentilerinizi detaylandırın..."></textarea></div>
+      <div class="fr">
+        <div class="fg"><label>Talep Türü *</label>
+          <select class="fc" id="r-type">
+            <option value="Ölçüm">📐 Ölçüm (Lean ekibinden)</option>
+            <option value="Eğitim">📚 Eğitim (Training ekibinden)</option>
+            <option value="Rapor">📊 Rapor / Analiz (Analytics'ten)</option>
+            <option value="Proje Desteği">🤝 Proje Desteği</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+        <div class="fg"><label>Öncelik</label>
+          <select class="fc" id="r-prio">
+            <option>Orta</option><option>Düşük</option><option>Yüksek</option><option>Kritik</option>
+          </select>
+        </div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Talep Eden Departman</label><input class="fc" id="r-dept" placeholder="Operasyon, Lojistik, Finans..."></div>
+        <div class="fg"><label>Beklenen Tamamlanma</label><input class="fc" type="date" id="r-due"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" onclick="closeOv('ov-request')">İptal</button>
+      <button class="btn btn-primary" onclick="submitRequest()">Talep Gönder</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL MODAL ══ -->
+<div class="overlay" id="ov-detail">
+  <div class="modal det-modal">
+    <div class="modal-head">
+      <span class="tid" id="det-id" style="flex-shrink:0"></span>
+      <div class="modal-title" id="det-modal-title"></div>
+      <button class="btn btn-ghost btn-sm" onclick="closeOv('ov-detail')">✕</button>
+    </div>
+    <div class="det-layout">
+      <div class="det-main">
+        <div class="det-title" id="det-title"></div>
+        <div class="det-desc" id="det-desc"></div>
+
+        <!-- Attachments -->
+        <div class="att-area">
+          <div class="sec-lbl">📎 Dosya Ekleri <small id="det-att-cnt"></small></div>
+          <div id="det-att-list" class="att-list"></div>
+          <div class="att-drop" id="det-att-drop"
+            ondragover="event.preventDefault();this.classList.add('dov')"
+            ondragleave="this.classList.remove('dov')"
+            ondrop="handleDrop(event)">
+            <input type="file" multiple onchange="handleFiles(this.files)">
+            <div style="font-size:18px;margin-bottom:4px">📁</div>
+            <div style="font-size:12.5px;color:var(--text-soft);font-weight:500">Tıkla veya sürükle-bırak</div>
+            <div style="font-size:11px;color:var(--text-hint);margin-top:2px">Fotoğraf, Excel, Word, PDF — Max 50MB</div>
+          </div>
+        </div>
+
+        <!-- Observers -->
+        <div class="obs-area">
+          <div class="sec-lbl">👁️ Gözlemciler <small>— tüm değişikliklerden haberdar edilir</small></div>
+          <div class="obs-list" id="det-obs"></div>
+          <div class="obs-add" id="obs-add-row">
+            <input type="email" id="obs-email" placeholder="e-posta@arvato.com" onkeydown="if(event.key==='Enter')addObs()">
+            <button class="btn btn-secondary btn-sm" onclick="addObs()">＋</button>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="cmt-area">
+          <div class="sec-lbl">💬 Yorumlar</div>
+          <div id="det-cmts"></div>
+          <div class="cmt-row">
+            <div class="av av-md" id="det-cmt-av" style="flex-shrink:0"></div>
+            <textarea id="det-cmt-inp" placeholder="Yorum ekle..."></textarea>
+            <button class="btn btn-primary btn-sm" onclick="addCmt()">Gönder</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="det-side">
+        <!-- SLA -->
+        <div class="sla-card">
+          <div class="ml">⏱ SLA Durumu</div>
+          <div id="det-sla-chip" style="margin-bottom:4px"></div>
+          <div class="sla-bw"><div class="sla-bf" id="det-sla-bar"></div></div>
+          <div id="det-sla-txt" style="font-size:10.5px;color:var(--text-hint);font-family:'JetBrains Mono',monospace"></div>
+        </div>
+
+        <div class="mg"><div class="ml">Durum</div>
+          <select class="fc" id="det-status" style="padding:6px 10px;font-size:12px" onchange="updField('status',this.value)">
+            <option>Açık</option><option>Devam Ediyor</option><option>İncelemede</option><option>Tamamlandı</option><option>İptal</option>
+          </select>
+        </div>
+        <div class="mg"><div class="ml">Öncelik</div>
+          <select class="fc" id="det-prio" style="padding:6px 10px;font-size:12px" onchange="updField('priority',this.value)">
+            <option>Düşük</option><option>Orta</option><option>Yüksek</option><option>Kritik</option>
+          </select>
+        </div>
+        <div class="mg" id="det-assign-grp">
+          <div class="ml">Atananlar</div>
+          <div class="mav" id="det-av-chips"></div>
+        </div>
+        <div class="mg"><div class="ml">Tür</div><div class="mv" id="det-type"></div></div>
+        <div class="mg"><div class="ml">Ekip</div><div class="mv" id="det-team"></div></div>
+        <div class="mg"><div class="ml">Son Tarih</div><div class="mv" id="det-due"></div></div>
+        <div class="mg"><div class="ml">Tekrar</div><div class="mv" id="det-recur"></div></div>
+        <div class="mg"><div class="ml">Oluşturan</div><div class="mv" id="det-creator"></div></div>
+        <div class="mg"><div class="ml">Etiketler</div><div id="det-tags"></div></div>
+        <div class="divider"></div>
+        <div style="display:flex;flex-direction:column;gap:7px" id="det-actions"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD MEMBER ══ -->
+<div class="overlay" id="ov-member">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-head"><div class="modal-title">Kullanıcı Ekle</div><button class="btn btn-ghost btn-sm" onclick="closeOv('ov-member')">✕</button></div>
+    <div class="modal-body">
+      <div class="fr"><div class="fg"><label>Ad Soyad *</label><input class="fc" id="m-name" placeholder="Ahmet Yılmaz"></div><div class="fg"><label>E-posta *</label><input class="fc" id="m-email" placeholder="a.yilmaz@arvato.com"></div></div>
+      <div class="fr">
+        <div class="fg"><label>Rol</label>
+          <select class="fc" id="m-role">
+            <option value="member">Ekip Üyesi</option><option value="manager">Yönetici</option>
+            <option value="admin">Admin</option><option value="external">Dış Kullanıcı</option>
+          </select>
+        </div>
+        <div class="fg"><label>Ekip</label>
+          <select class="fc" id="m-team"><option value="">—</option><option>Lean</option><option>Training</option><option>Analytics & Reporting</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Ünvan / Departman</label><input class="fc" id="m-title" placeholder="Lean Uzmanı / Operasyon"></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-secondary" onclick="closeOv('ov-member')">İptal</button><button class="btn btn-primary" onclick="saveMember()">Kaydet</button></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   LTAR FLOW — LENS Integration
+   Lean · Training · Analytics & Reporting
+   İş & Talep Yönetim Sistemi
+═══════════════════════════════════════════════════ */
+
+// ── CONSTANTS ──────────────────────────────────
+const ROLES={admin:'Admin',manager:'Yönetici',member:'Ekip Üyesi',external:'Dış Kullanıcı'};
+const RP_CLS={admin:'rp-admin',manager:'rp-manager',member:'rp-member',external:'rp-external'};
+const TEAM_C={Lean:'#0078BE','Analytics & Reporting':'#D97706',Training:'#1A7A4A'};
+const TEAM_LT={Lean:'#E6F3FB','Analytics & Reporting':'#FEF3C7',Training:'#DCFCE7'};
+const STAT_MAP={'Açık':'b-open','Devam Ediyor':'b-prog','İncelemede':'b-review','Tamamlandı':'b-done','İptal':'b-cancel','Beklemede':'b-open','Değerlendiriliyor':'b-review','Reddedildi':'b-cancel'};
+const PRIO_MAP={Kritik:'pc',Yüksek:'ph',Orta:'pm',Düşük:'pl'};
+const TYPE_CLS={'Planlı İş':'t-planned','Dış Talep':'t-request','Rutin':'t-routine','Toplantı & Aksiyon':'t-meeting'};
+const TYPE_ICON={'Planlı İş':'📌','Dış Talep':'📬','Rutin':'🔄','Toplantı & Aksiyon':'📅'};
+const K_COLS=['Açık','Devam Ediyor','İncelemede','Tamamlandı','İptal'];
+const K_COL_C={'Açık':'#0078BE','Devam Ediyor':'#D97706','İncelemede':'#6D28D9','Tamamlandı':'#1A7A4A','İptal':'#94A3B8'};
+const FILE_ICONS={image:'🖼️',pdf:'📄',word:'📝',excel:'📊',csv:'📊',zip:'📦',video:'🎬',default:'📎'};
+const AV_COLORS=['#0078BE','#005A8E','#1A7A4A','#B91C1C','#D97706','#6D28D9','#0891b2','#be185d'];
+const REQ_TEAM={'Ölçüm':'Lean','Eğitim':'Training','Rapor':'Analytics & Reporting','Proje Desteği':'','Diğer':''};
+
+// ── STATE ───────────────────────────────────────
+const S={
+  works:[], requests:[], users:[], activity:[],
+  sla:{Kritik:4,Yüksek:24,Orta:72,Düşük:168},
+  slaWarn:{Kritik:75,Yüksek:75,Orta:75,Düşük:75},
+  pa:{new:'',assign:'',status:'',comment:'',attach:'',deadline:''},
+  currentUser:null, currentId:null, counter:1, reqCounter:1,
+  editingId:null, editingMemberId:null, workTab:'all'
+};
+
+// ── SEED ────────────────────────────────────────
+function seed(){
+  S.users=[
+    // ── LEAN ──
+    {id:'u-lean-01',sicil:1533,  name:'Umay Kayaalp',      email:'umay.kayaalp@arvato.com',    role:'admin',   team:'Lean',                  title:'Senior Lean & Analytics Manager',         color:'#0078BE',initials:'UK'},
+    {id:'u-lean-02',sicil:15666, name:'Emre Bektaş',       email:'emre.bektas@arvato.com',     role:'manager', team:'Lean',                  title:'Lean Supervisor',                         color:'#005A8E',initials:'EB'},
+    {id:'u-lean-03',sicil:16007, name:'Ekrem Aydoğdu',     email:'ekrem.aydogdu@arvato.com',   role:'manager', team:'Lean',                  title:'Lean Senior Specialist',                  color:'#3399CC',initials:'EA'},
+    {id:'u-lean-04',sicil:5053,  name:'Meltem Kocael',     email:'meltem.kocael@arvato.com',   role:'manager', team:'Lean',                  title:'Lean Senior Specialist',                  color:'#1A7A4A',initials:'MK'},
+    {id:'u-lean-05',sicil:18759, name:'Aksanur Olgun',     email:'aksanur.olgun@arvato.com',   role:'member',  team:'Lean',                  title:'Lean Senior Specialist',                  color:'#15803D',initials:'AO'},
+    {id:'u-lean-06',sicil:18935, name:'Mücahit Çeliker',   email:'mucahit.celiker@arvato.com', role:'member',  team:'Lean',                  title:'Lean Senior Specialist',                  color:'#059669',initials:'MÇ'},
+    {id:'u-lean-07',sicil:17271, name:'İrem Polat',        email:'irem.polat@arvato.com',      role:'member',  team:'Lean',                  title:'Lean Senior Specialist',                  color:'#0891b2',initials:'İP'},
+    {id:'u-lean-08',sicil:19335, name:'Emre Değer',        email:'emre.deger@arvato.com',      role:'member',  team:'Lean',                  title:'Lean Specialist',                         color:'#6D28D9',initials:'ED'},
+    {id:'u-lean-09',sicil:20101, name:'Azad Tunç',         email:'azad.tunc@arvato.com',       role:'member',  team:'Lean',                  title:'Lean Specialist',                         color:'#7c3aed',initials:'AT'},
+    {id:'u-lean-10',sicil:10145, name:'Berfin Doğan',      email:'berfin.dogan@arvato.com',    role:'member',  team:'Lean',                  title:'Lean Specialist',                         color:'#be185d',initials:'BD'},
+    {id:'u-lean-11',sicil:22558, name:'Hazar Sarıçimen',   email:'hazar.saricimen@arvato.com', role:'member',  team:'Lean',                  title:'Lean Specialist',                         color:'#B45309',initials:'HS'},
+    {id:'u-lean-12',sicil:23265, name:'Oğuzcan Yüce',      email:'oguzcan.yuce@arvato.com',    role:'member',  team:'Lean',                  title:'Lean Specialist',                         color:'#D97706',initials:'OY'},
+    // ── TRAINING ──
+    {id:'u-trn-01', sicil:19096, name:'Tolga Uçar',        email:'tolga.ucar@arvato.com',      role:'manager', team:'Training',              title:'Training Supervisor',                     color:'#1A7A4A',initials:'TU'},
+    {id:'u-trn-02', sicil:24825, name:'Elif Yılmaz',       email:'elif.yilmaz1@arvato.com',    role:'member',  team:'Training',              title:'Training Specialist',                     color:'#059669',initials:'EY'},
+    {id:'u-trn-03', sicil:19368, name:'Ömer Faruk Öte',    email:'omerfaruk.ote@arvato.com',   role:'member',  team:'Training',              title:'Training Specialist',                     color:'#0891b2',initials:'ÖÖ'},
+    {id:'u-trn-04', sicil:19614, name:'Mustafa Yumşak',    email:'mustafa.yumsak@arvato.com',  role:'member',  team:'Training',              title:'Training Specialist',                     color:'#6D28D9',initials:'MY'},
+    {id:'u-trn-05', sicil:24826, name:'İlknur Yerli Eliş', email:'ilknur.elis@arvato.com',     role:'member',  team:'Training',              title:'Training Specialist',                     color:'#be185d',initials:'İE'},
+    // ── ANALYTICS & REPORTING ──
+    {id:'u-anl-01', sicil:1743,  name:'Fırat Argüden',     email:'firat.arguden@arvato.com',   role:'manager', team:'Analytics & Reporting', title:'Analytics & Reporting Manager',           color:'#005A8E',initials:'FA'},
+    {id:'u-anl-02', sicil:19404, name:'Enes Çakar',        email:'enes.cakar@arvato.com',      role:'manager', team:'Analytics & Reporting', title:'Analytics & Reporting Senior Specialist', color:'#D97706',initials:'EÇ'},
+    {id:'u-anl-03', sicil:7074,  name:'Ayşenur Bika',      email:'aysenur.bika@arvato.com',    role:'manager', team:'Analytics & Reporting', title:'Analytics & Reporting Senior Specialist', color:'#B45309',initials:'AB'},
+    {id:'u-anl-04', sicil:1141,  name:'Büşra Kayaoğlu',    email:'busra.kayaoglu@arvato.com',  role:'member',  team:'Analytics & Reporting', title:'Raportör',                                color:'#0078BE',initials:'BK'},
+    {id:'u-anl-05', sicil:2290,  name:'Kübra Nur Kılınç',  email:'kubra.kilinc@arvato.com',    role:'member',  team:'Analytics & Reporting', title:'Raportör',                                color:'#3399CC',initials:'KK'},
+    {id:'u-anl-06', sicil:7483,  name:'Ahmet M. Aslan',    email:'ahmet.aslan@arvato.com',     role:'member',  team:'Analytics & Reporting', title:'Raportör',                                color:'#6D28D9',initials:'AA'},
+  ];
+
+  const ago=(h)=>new Date(Date.now()-h*3600000).toISOString();
+  const future=(d)=>new Date(Date.now()+d*86400000).toISOString().slice(0,10);
+
+  S.works=[
+    {id:'LTF-001',title:'Q4 KPI Dashboard Hazırlanması',desc:'Dördüncü çeyrek için tüm platform KPI göstergelerinin Power BI dashboard\'a eklenmesi.',type:'Planlı İş',team:'Analytics & Reporting',priority:'Yüksek',status:'Devam Ediyor',assignees:['u-anl-04','u-anl-05'],observers:['umay.kayaalp@arvato.com'],creator:'u-lean-01',slaHrs:null,due:future(5),tags:['Q4','KPI','PowerBI'],recur:'',attachments:[{name:'KPI_taslak.xlsx',size:512000,type:'excel',time:ago(2),by:'u-anl-04',dataUrl:''}],comments:[{author:'u-anl-04',text:'İlk taslak hazır, inceleme bekliyor.',time:ago(1)}],created:ago(72),updated:ago(1)},
+    {id:'LTF-002',title:'5S Eğitimi — Depo 3 Yeni Personel',desc:'Depo 3\'e alınan 12 yeni personel için 5S temel eğitimi planlanması ve uygulanması.',type:'Planlı İş',team:'Training',priority:'Kritik',status:'Açık',assignees:['u-trn-02'],observers:['emre.bektas@arvato.com'],creator:'u-lean-02',slaHrs:4,due:future(2),tags:['5S','eğitim','acil'],recur:'',attachments:[],comments:[],created:ago(8),updated:ago(8)},
+    {id:'LTF-003',title:'Değer Akışı Haritalama — Platform M',desc:'Platform M için mevcut durum VSM çizimi ve gelecek durum önerisi.',type:'Planlı İş',team:'Lean',priority:'Orta',status:'İncelemede',assignees:['u-lean-05','u-lean-06'],observers:[],creator:'u-lean-01',slaHrs:null,due:future(10),tags:['VSM','lean','platform-m'],recur:'',attachments:[{name:'VSM_mevcut.pdf',size:2097152,type:'pdf',time:ago(24),by:'u-lean-05',dataUrl:''}],comments:[{author:'u-lean-05',text:'Çizim tamamlandı, onay bekleniyor.',time:ago(24)}],created:ago(120),updated:ago(24)},
+    {id:'LTF-004',title:'Haftalık LENS 5S Denetim Raporu',desc:'Tüm platformların haftalık 5S denetim sonuçlarının derlenmesi ve yönetim raporunun hazırlanması.',type:'Rutin',team:'Analytics & Reporting',priority:'Yüksek',status:'Tamamlandı',assignees:['u-anl-05'],observers:['umay.kayaalp@arvato.com'],creator:'u-lean-01',slaHrs:null,due:'',tags:['haftalık','5S','denetim'],recur:'weekly',attachments:[{name:'5S_Rapor_W47.pdf',size:789000,type:'pdf',time:ago(10),by:'u-anl-05',dataUrl:''}],comments:[],created:ago(168),updated:ago(10)},
+    {id:'LTF-005',title:'Aylık Ekip Toplantısı — Kasım Aksiyonları',desc:'Kasım ayı ekip değerlendirme toplantısı aksiyonları ve takip maddeleri.',type:'Toplantı & Aksiyon',team:'Lean',priority:'Orta',status:'Açık',assignees:['u-lean-05','u-lean-06','u-lean-01'],observers:[],creator:'u-lean-01',slaHrs:null,due:future(7),tags:['toplantı','aksiyon','kasım'],recur:'monthly',attachments:[],comments:[],created:ago(48),updated:ago(48)},
+    {id:'LTF-006',title:'Onboarding Eğitim Materyali Güncellemesi',desc:'Yeni çalışan oryantasyon materyallerinin Q4 süreç değişikliklerine göre güncellenmesi.',type:'Rutin',team:'Training',priority:'Düşük',status:'Açık',assignees:['u-trn-02','u-trn-03'],observers:[],creator:'u-lean-01',slaHrs:null,due:future(14),tags:['onboarding','oryantasyon'],recur:'',attachments:[],comments:[],created:ago(36),updated:ago(36)},
+  ];
+
+  S.requests=[
+    {id:'REQ-001',title:'Ölçüm talebi — Hat 4 verimlilik analizi',desc:'Hat 4\'te son 2 haftadır yaşanan verimlilik düşüşünün analizi.',type:'Ölçüm',priority:'Yüksek',status:'Devam Ediyor',requester:'u-lean-02',dept:'Operasyon',targetTeam:'Lean',assignees:['u-lean-05'],observers:[],comments:[{author:'u-lean-05',text:'Saha ölçümlerine başladım, 3 günde raporlarım.',time:ago(2)}],attachments:[],created:ago(48),updated:ago(2),due:future(3)},
+    {id:'REQ-002',title:'Aylık platform raporları — Ekim özeti',desc:'Ekim ayı tüm platform performans verilerinin özetlenmesi.',type:'Rapor',priority:'Orta',status:'Beklemede',requester:'u-lean-02',dept:'Yönetim',targetTeam:'Analytics & Reporting',assignees:[],observers:['umay.kayaalp@arvato.com'],comments:[],attachments:[],created:ago(24),updated:ago(24),due:future(5)},
+    {id:'REQ-003',title:'Tedarikçi oryantasyon eğitimi — XYZ A.Ş.',desc:'Yeni tedarikçi XYZ için Arvato operasyon prosedürleri eğitimi.',type:'Eğitim',priority:'Orta',status:'Değerlendiriliyor',requester:'u-lean-02',dept:'Tedarik Zinciri',targetTeam:'Training',assignees:['u-trn-02'],observers:[],comments:[],attachments:[],created:ago(12),updated:ago(6),due:future(10)},
+  ];
+
+  S.activity=[
+    {text:'LTF-004 tamamlandı',icon:'✅',time:ago(10)},
+    {text:'REQ-001 Merve\'ye atandı',icon:'👤',time:ago(48)},
+    {text:'LTF-003 incelemeye alındı',icon:'🔍',time:ago(24)},
+    {text:'LTF-002 oluşturuldu — Kritik öncelik',icon:'🚨',time:ago(8)},
+    {text:'REQ-002 oluşturuldu',icon:'📬',time:ago(24)},
+  ];
+  S.counter=7; S.reqCounter=4;
+  save();
+}
+
+// ── STORAGE ─────────────────────────────────────
+function save(){try{localStorage.setItem('ltarflow_v2',JSON.stringify({works:S.works,requests:S.requests,users:S.users,activity:S.activity,sla:S.sla,slaWarn:S.slaWarn,pa:S.pa,counter:S.counter,reqCounter:S.reqCounter}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('ltarflow_v2')||'null');if(!d)return false;Object.assign(S,d);return true;}catch(e){return false;}}
+
+// ── SLA ─────────────────────────────────────────
+function getSLAHrs(w){return w.slaHrs||S.sla[w.priority]||72;}
+function getSLAInfo(w){
+  if(w.status==='Tamamlandı'||w.status==='İptal'||w.status==='Reddedildi')return{state:'done',pct:100,label:'Kapalı'};
+  const tot=getSLAHrs(w)*3600000,el=Date.now()-new Date(w.created).getTime();
+  const pct=Math.min(100,(el/tot)*100),rem=tot-el,wp=S.slaWarn[w.priority]||75;
+  const state=pct>=100?'breach':pct>=wp?'warn':'ok';
+  return{state,pct,remaining:rem,label:rem<=0?'⚠ İhlal!':fmtDur(rem)};
+}
+function fmtDur(ms){if(ms<0)return'Geçti';const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);if(h>=48)return Math.floor(h/24)+'g';if(h>=1)return h+'sa '+m+'dk';return m+'dk';}
+function slaChip(w){const{state,label}=getSLAInfo(w);if(state==='done')return`<span class="sla sla-done">—</span>`;const cls=state==='breach'?'sla-breach sla-pulse':state==='warn'?'sla-warn':'sla-ok';return`<span class="sla ${cls}">${label}</span>`;}
+
+// ── FILE ────────────────────────────────────────
+function fileIcon(n){const e=(n.split('.').pop()||'').toLowerCase();if(['jpg','jpeg','png','gif','webp'].includes(e))return FILE_ICONS.image;if(e==='pdf')return FILE_ICONS.pdf;if(['doc','docx'].includes(e))return FILE_ICONS.word;if(['xls','xlsx'].includes(e))return FILE_ICONS.excel;if(e==='csv')return FILE_ICONS.csv;if(['zip','rar'].includes(e))return FILE_ICONS.zip;return FILE_ICONS.default;}
+function fmtSize(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(1)+'MB';}
+function handleFiles(files){Array.from(files).forEach(f=>addFile(f));}
+function handleDrop(e){e.preventDefault();document.getElementById('det-att-drop').classList.remove('dov');handleFiles(e.dataTransfer.files);}
+function addFile(file){
+  const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w)return;
+  if(file.size>52428800){toast('Max 50MB','err');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    if(!w.attachments)w.attachments=[];
+    w.attachments.push({name:file.name,size:file.size,type:'default',time:new Date().toISOString(),by:S.currentUser.id,dataUrl:e.target.result});
+    w.updated=new Date().toISOString();
+    addAct(`${w.id} dosya eklendi: ${file.name}`,'📎');save();renderAtts(w);toast(`${file.name} eklendi`,'ok');
+  };
+  reader.readAsDataURL(file);
+}
+function renderAtts(w){
+  const list=document.getElementById('det-att-list'),cnt=document.getElementById('det-att-cnt');
+  if(cnt)cnt.textContent=w.attachments&&w.attachments.length?`(${w.attachments.length})`:'';
+  if(!list)return;
+  list.innerHTML=(w.attachments||[]).map((a,i)=>{
+    const u=S.users.find(x=>x.id===a.by);
+    return`<div class="att-item"><span style="font-size:16px">${fileIcon(a.name)}</span>
+    <div style="flex:1;min-width:0"><div class="att-name">${a.name}</div>
+    <div style="font-size:10px;color:var(--text-hint);font-family:'JetBrains Mono',monospace">${fmtSize(a.size)} · ${u?u.name:'?'} · ${timeAgo(a.time)}</div></div>
+    ${a.dataUrl?`<a href="${a.dataUrl}" download="${a.name}" class="att-dl">⬇</a>`:''}
+    <button class="att-del" onclick="removeAtt(${i})">×</button></div>`;
+  }).join('');
+}
+function removeAtt(i){const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w||!w.attachments)return;w.attachments.splice(i,1);w.updated=new Date().toISOString();save();renderAtts(w);toast('Ek kaldırıldı','info');}
+
+// ── OBSERVERS ────────────────────────────────────
+function renderObs(w){
+  const list=document.getElementById('det-obs');if(!list)return;
+  const ar=document.getElementById('obs-add-row');if(ar)ar.style.display=canEdit()?'flex':'none';
+  list.innerHTML=(w.observers||[]).map((email,i)=>`<div class="obs-chip">👁️ ${email}<button class="obs-del" onclick="removeObs(${i})">×</button></div>`).join('')
+    ||`<span style="font-size:12px;color:var(--text-hint)">Gözlemci yok</span>`;
+}
+function addObs(){
+  const input=document.getElementById('obs-email'),email=input.value.trim().toLowerCase();
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast('Geçerli e-posta girin','err');return;}
+  const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w)return;
+  if(!w.observers)w.observers=[];if(w.observers.includes(email)){toast('Zaten ekli','err');return;}
+  w.observers.push(email);w.updated=new Date().toISOString();input.value='';
+  addAct(`${w.id} gözlemci: ${email}`,'👁️');save();renderObs(w);toast(`${email} eklendi`,'ok');
+}
+function removeObs(i){const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w||!w.observers)return;const e=w.observers[i];w.observers.splice(i,1);w.updated=new Date().toISOString();save();renderObs(w);toast(`${e} kaldırıldı`,'info');}
+
+// ── AUTH ─────────────────────────────────────────
+function initLogin(){
+  document.getElementById('quick-users').innerHTML=S.users.map(u=>`
+    <button class="qbtn" onclick="loginAs('${u.id}')">
+      <div class="av" style="background:${u.color};width:24px;height:24px;font-size:9px;flex-shrink:0">${u.initials}</div>
+      <div><div style="font-weight:600;font-size:12.5px">${u.name}</div>
+        <div style="font-size:11px;color:var(--text-soft)">${ROLES[u.role]}${u.team?' · '+u.team:' · '+u.title}</div></div>
+      <span class="rpill ${RP_CLS[u.role]}" style="margin-left:auto;font-size:10px">${ROLES[u.role]}</span>
+    </button>`).join('');
+}
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim().toLowerCase();if(!email)return;
+  let u=S.users.find(x=>x.email.toLowerCase()===email);
+  if(!u){u={id:'u-'+Date.now(),name:email.split('@')[0],email,role:'external',team:'',title:'Dış Kullanıcı',color:AV_COLORS[S.users.length%AV_COLORS.length],initials:email.slice(0,2).toUpperCase()};S.users.push(u);save();}
+  loginAs(u.id);
+}
+function loginAs(uid){S.currentUser=S.users.find(u=>u.id===uid);if(!S.currentUser)return;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';setupApp();}
+function logout(){S.currentUser=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none';}
+
+// ── SETUP ────────────────────────────────────────
+function setupApp(){
+  const u=S.currentUser;
+  const av=document.getElementById('sb-av');av.style.background=u.color;av.textContent=u.initials;
+  document.getElementById('sb-name').textContent=u.name;
+  document.getElementById('sb-role').textContent=ROLES[u.role]+(u.team?' · '+u.team:'');
+  const rp=document.getElementById('tb-rp');rp.className='rpill '+RP_CLS[u.role];rp.textContent=ROLES[u.role];
+  const ca=document.getElementById('det-cmt-av');ca.style.background=u.color;ca.textContent=u.initials;
+  buildNav();
+  const isInternal=u.role!=='external';
+  document.getElementById('btn-dash-new').style.display=isInternal?'':'none';
+  nav(isInternal?'dashboard':'mine');
+}
+
+let currentPage='dashboard';
+function buildNav(){
+  const u=S.currentUser;
+  const breachCnt=S.works.filter(w=>getSLAInfo(w).state==='breach').length;
+  const openReq=S.requests.filter(r=>r.status==='Beklemede').length;
+  let html='';
+  if(u.role!=='external'){
+    html+=`<div class="sb-sec">İş Takibi</div>
+    <button class="sb-item" data-nav="dashboard" onclick="nav('dashboard')"><span class="sb-icon">📊</span>Dashboard</button>
+    <button class="sb-item" data-nav="works" onclick="nav('works')"><span class="sb-icon">📋</span>Tüm İşler
+      ${S.works.filter(w=>w.status==='Açık').length?`<span class="sb-badge">${S.works.filter(w=>w.status==='Açık').length}</span>`:''}
+      ${breachCnt?`<span class="sb-badge red">${breachCnt}</span>`:''}
+    </button>
+    <button class="sb-item" data-nav="requests" onclick="nav('requests')"><span class="sb-icon">📬</span>Gelen Talepler
+      ${openReq?`<span class="sb-badge amber">${openReq}</span>`:''}
+    </button>
+    <button class="sb-item" data-nav="kanban" onclick="nav('kanban')"><span class="sb-icon">🗂️</span>Kanban Board</button>
+    <div class="sb-sec">Ekip</div>
+    <button class="sb-item" data-nav="team" onclick="nav('team')"><span class="sb-icon">👥</span>Ekip</button>`;
+  }
+  html+=`<div class="sb-sec">Kişisel</div>
+  <button class="sb-item" data-nav="mine" onclick="nav('mine')"><span class="sb-icon">🎯</span>${u.role==='external'?'Taleplerim':'İşlerim & Taleplerim'}</button>`;
+  if(u.role==='admin'){html+=`<div class="sb-sec">Yönetim</div><button class="sb-item" data-nav="settings" onclick="nav('settings')"><span class="sb-icon">⚙️</span>Ayarlar</button>`;}
+  document.getElementById('sb-nav').innerHTML=html;
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.toggle('active',b.dataset.nav===currentPage));
+}
+
+// ── NAVIGATION ───────────────────────────────────
+const PT={dashboard:'Dashboard',works:'İşler',requests:'Gelen Talepler',kanban:'Kanban Board',team:'Ekip',mine:'İşlerim & Taleplerim',settings:'Ayarlar'};
+function nav(page){
+  currentPage=page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg=document.getElementById('pg-'+page);if(pg)pg.classList.add('active');
+  document.getElementById('tb-title').textContent=PT[page]||page;
+  buildNav();
+  if(page==='dashboard')renderDashboard();
+  if(page==='works')renderWorks();
+  if(page==='requests')renderRequests();
+  if(page==='kanban')renderKanban();
+  if(page==='team')renderTeam();
+  if(page==='mine')renderMine();
+  if(page==='settings')renderSettings();
+}
+
+// ── DASHBOARD ────────────────────────────────────
+function renderDashboard(){
+  const u=S.currentUser;
+  document.getElementById('dash-sub').textContent=`Merhaba ${u.name.split(' ')[0]}, LTAR ekip özeti`;
+  const pendReq=S.requests.filter(r=>r.status==='Beklemede').length;
+  const dashReqBtn=document.getElementById('btn-dash-req');
+  if(dashReqBtn){dashReqBtn.style.display=(u.role!=='external'&&pendReq>0)?'flex':'none';document.getElementById('dash-req-cnt').textContent=pendReq||'';}
+
+  const allW=S.works;
+  const stats=[
+    {lbl:'Toplam İş',val:allW.length,color:'#0078BE',icon:'📋'},
+    {lbl:'Açık',val:allW.filter(w=>w.status==='Açık').length,color:'#D97706',icon:'⚡'},
+    {lbl:'Devam Ediyor',val:allW.filter(w=>w.status==='Devam Ediyor').length,color:'#6D28D9',icon:'🔄'},
+    {lbl:'Tamamlandı',val:allW.filter(w=>w.status==='Tamamlandı').length,color:'#1A7A4A',icon:'✅'},
+    {lbl:'SLA İhlali',val:allW.filter(w=>getSLAInfo(w).state==='breach').length,color:'#B91C1C',icon:'🚨'},
+    {lbl:'Bekleyen Talep',val:S.requests.filter(r=>r.status==='Beklemede').length,color:'#D97706',icon:'📬'},
+  ];
+  document.getElementById('dash-stats').innerHTML=stats.map(s=>`
+    <div class="stat">
+      <div class="stat-top" style="background:${s.color}"></div>
+      <div class="stat-lbl">${s.lbl}</div>
+      <div class="stat-val" style="color:${s.lbl==='Toplam İş'?'var(--text)':s.color}">${s.val}</div>
+    </div>`).join('');
+
+  const active=allW.filter(w=>w.status!=='Tamamlandı'&&w.status!=='İptal').slice(0,8);
+  document.getElementById('dash-table').innerHTML=active.length?active.map(w=>`
+    <tr class="${getSLAInfo(w).state==='breach'?'overdue':''}" onclick="openDetail('${w.id}')">
+      <td><span class="tid">${w.id}</span></td>
+      <td><span class="ttitle">${w.title}<small>${w.tags&&w.tags.length?w.tags.map(t=>`<span class="tag">${t}</span>`).join(''):''}</small></span></td>
+      <td><span class="type-badge ${TYPE_CLS[w.type]||'t-planned'}">${TYPE_ICON[w.type]||'📌'} ${w.type}</span></td>
+      <td>${teamTag(w.team)}</td><td>${statusBadge(w.status)}</td>
+      <td>${slaChip(w)}</td><td>${avStack(w.assignees)}</td>
+    </tr>`).join(''):`<tr><td colspan="7" style="text-align:center;padding:22px;color:var(--text-hint);font-size:13px">Aktif iş yok</td></tr>`;
+
+  // Workload chart
+  const teams=['Lean','Training','Analytics & Reporting'];
+  const maxW=Math.max(...teams.map(t=>S.works.filter(w=>w.team===t&&w.status!=='Tamamlandı'&&w.status!=='İptal').length),1);
+  document.getElementById('workload-chart').innerHTML=teams.map(t=>{
+    const cnt=S.works.filter(w=>w.team===t&&w.status!=='Tamamlandı'&&w.status!=='İptal').length;
+    const c=TEAM_C[t];
+    return`<div class="mc-row"><div class="mc-label">${t}</div><div class="mc-bar-wrap"><div class="mc-bar" style="width:${Math.round(cnt/maxW*100)}%;background:${c}"></div></div><div class="mc-val">${cnt}</div></div>`;
+  }).join('');
+
+  document.getElementById('dash-act').innerHTML=[...S.activity].reverse().slice(0,12).map(a=>`
+    <div class="act-item">${a.icon} ${a.text}<span class="act-time">${timeAgo(a.time)}</span></div>`).join('')
+    ||`<div style="color:var(--text-hint);padding:8px;font-size:13px">Aktivite yok</div>`;
+}
+
+// ── WORKS TABLE ──────────────────────────────────
+let workTab='all';
+function switchWorkTab(tab,el){
+  workTab=tab;
+  document.querySelectorAll('#works-tabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  filterWorks();
+}
+function renderWorks(filtered=null){
+  const works=filtered!==null?filtered:getFilteredWorks();
+  document.getElementById('works-table').innerHTML=works.length?works.map(w=>`
+    <tr class="${getSLAInfo(w).state==='breach'?'overdue':''}" onclick="openDetail('${w.id}')">
+      <td><span class="tid">${w.id}</span></td>
+      <td><span class="ttitle">${w.title}${w.tags&&w.tags.length?`<small>${w.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</small>`:''}</span></td>
+      <td><span class="type-badge ${TYPE_CLS[w.type]||'t-planned'}">${TYPE_ICON[w.type]||'📌'} ${w.type}</span></td>
+      <td>${teamTag(w.team)}</td><td>${statusBadge(w.status)}</td>
+      <td><span class="prio ${PRIO_MAP[w.priority]}">${w.priority}</span></td>
+      <td>${slaChip(w)}</td><td>${avStack(w.assignees)}</td>
+      <td style="font-size:11.5px;color:var(--text-hint);white-space:nowrap;font-family:'JetBrains Mono',monospace">${w.due?fmtDate(w.due):'—'}</td>
+      <td onclick="event.stopPropagation()">${canEdit()?`<div style="display:flex;gap:3px"><button class="btn btn-ghost btn-xs" onclick="editWork('${w.id}')">✏️</button><button class="btn btn-ghost btn-xs" onclick="deleteWork('${w.id}')">🗑️</button></div>`:''}</td>
+    </tr>`).join(''):`<tr><td colspan="10" style="text-align:center;padding:28px;color:var(--text-hint);font-size:13px">İş bulunamadı</td></tr>`;
+}
+function getFilteredWorks(){
+  const q=(document.getElementById('work-search')||{}).value||'';
+  const st=(document.getElementById('f-status')||{}).value||'';
+  const tm=(document.getElementById('f-team')||{}).value||'';
+  const pr=(document.getElementById('f-prio')||{}).value||'';
+  const sl=(document.getElementById('f-sla')||{}).value||'';
+  const tabMap={'planned':'Planlı İş','routine':'Rutin','meeting':'Toplantı & Aksiyon'};
+  let works=S.works;
+  if(workTab!=='all')works=works.filter(w=>w.type===tabMap[workTab]);
+  if(q.toLowerCase())works=works.filter(w=>w.title.toLowerCase().includes(q.toLowerCase())||w.id.toLowerCase().includes(q.toLowerCase()));
+  if(st)works=works.filter(w=>w.status===st);
+  if(tm)works=works.filter(w=>w.team===tm);
+  if(pr)works=works.filter(w=>w.priority===pr);
+  if(sl)works=works.filter(w=>getSLAInfo(w).state===sl);
+  return works;
+}
+function filterWorks(){renderWorks();}
+function clearFilters(){['work-search','f-status','f-team','f-prio','f-sla'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});filterWorks();}
+
+// ── REQUESTS TABLE ───────────────────────────────
+function renderRequests(filtered=null){
+  const reqs=filtered!==null?filtered:S.requests;
+  document.getElementById('req-table').innerHTML=reqs.length?reqs.map(r=>{
+    const requester=S.users.find(u=>u.id===r.requester);
+    return`<tr onclick="openReqDetail('${r.id}')">
+      <td><span class="tid">${r.id}</span></td>
+      <td><span class="ttitle">${r.title}</span></td>
+      <td><span class="type-badge t-request">📬 ${r.type}</span></td>
+      <td>${requester?`<div style="display:flex;align-items:center;gap:6px"><div class="av" style="background:${requester.color}">${requester.initials}</div>${requester.name}</div>`:r.requester}</td>
+      <td style="font-size:12.5px">${r.dept||'—'}</td>
+      <td>${teamTag(r.targetTeam)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="font-size:11px;color:var(--text-hint);font-family:'JetBrains Mono',monospace">${timeAgo(r.created)}</td>
+      <td onclick="event.stopPropagation()">${canEdit()?`<div style="display:flex;gap:3px"><button class="btn btn-ghost btn-xs" onclick="openReqDetail('${r.id}')">👁</button><button class="btn btn-ghost btn-xs" onclick="deleteReq('${r.id}')">🗑️</button></div>`:''}</td>
+    </tr>`;}).join(''):`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text-hint);font-size:13px">Talep bulunamadı</td></tr>`;
+}
+function filterRequests(){
+  const q=(document.getElementById('req-search')||{}).value||'';
+  const ty=(document.getElementById('f-req-type')||{}).value||'';
+  const st=(document.getElementById('f-req-status')||{}).value||'';
+  let reqs=S.requests;
+  if(q)reqs=reqs.filter(r=>r.title.toLowerCase().includes(q.toLowerCase())||r.id.toLowerCase().includes(q.toLowerCase()));
+  if(ty)reqs=reqs.filter(r=>r.type===ty);
+  if(st)reqs=reqs.filter(r=>r.status===st);
+  renderRequests(reqs);
+}
+function clearReqFilters(){['req-search','f-req-type','f-req-status'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});renderRequests();}
+
+// ── KANBAN ───────────────────────────────────────
+function renderKanban(){
+  const tf=document.getElementById('kb-team').value;
+  const ttype=document.getElementById('kb-type').value;
+  let works=S.works;
+  if(tf)works=works.filter(w=>w.team===tf);
+  if(ttype)works=works.filter(w=>w.type===ttype);
+  document.getElementById('kanban-board').innerHTML=K_COLS.map(col=>{
+    const cards=works.filter(w=>w.status===col);
+    return`<div class="k-col" ondragover="event.preventDefault()" ondrop="dropKB(event,'${col}')">
+      <div class="k-col-head"><div style="width:7px;height:7px;border-radius:50%;background:${K_COL_C[col]};flex-shrink:0"></div><div class="k-col-name">${col}</div><div class="k-col-cnt">${cards.length}</div></div>
+      <div class="k-cards">${cards.map(w=>`
+        <div class="k-card" draggable="${canEdit()}" ondragstart="dragS(event,'${w.id}')" onclick="openDetail('${w.id}')">
+          <div class="k-card-id">${w.id}</div>
+          <div class="k-card-title">${w.title}</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap">
+            <span class="type-badge ${TYPE_CLS[w.type]||'t-planned'}" style="font-size:10px">${TYPE_ICON[w.type]} ${w.type}</span>
+            <span class="prio ${PRIO_MAP[w.priority]}" style="font-size:10px">${w.priority}</span>
+          </div>
+          <div class="k-card-foot">${avStack(w.assignees)}${slaChip(w)}</div>
+        </div>`).join('')}
+      ${!cards.length?`<div style="padding:12px;text-align:center;color:var(--text-hint);font-size:12px">Boş</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+let dragged=null;
+function dragS(e,id){if(!canEdit())return;dragged=id;}
+function dropKB(e,status){
+  if(!dragged||!canEdit())return;
+  const w=S.works.find(x=>x.id===dragged);
+  if(w&&w.status!==status){const old=w.status;w.status=status;w.updated=new Date().toISOString();addAct(`${w.id}: ${old} → ${status}`,'🔄');triggerNotif('status',w);save();renderKanban();renderDashboard();buildNav();toast(`${w.id} → ${status}`,'ok');}
+  dragged=null;
+}
+
+// ── TEAM ─────────────────────────────────────────
+function renderTeam(){
+  const isAdmin=S.currentUser.role==='admin';
+  document.getElementById('team-content').innerHTML=['Lean','Training','Analytics & Reporting'].map(team=>{
+    const members=S.users.filter(u=>u.team===team),c=TEAM_C[team],lt=TEAM_LT[team];
+    return`<div class="team-section">
+      <div class="ts-head">
+        <div style="width:10px;height:10px;border-radius:50%;background:${c}"></div>
+        <div class="ts-name">${team}</div>
+        <span style="background:${lt};color:${c};padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid ${c}30">${members.length} üye</span>
+      </div>
+      <div class="mc-grid">
+        ${members.map(m=>{
+          const as=S.works.filter(w=>w.assignees.includes(m.id)).length;
+          const ip=S.works.filter(w=>w.assignees.includes(m.id)&&w.status==='Devam Ediyor').length;
+          const dn=S.works.filter(w=>w.assignees.includes(m.id)&&w.status==='Tamamlandı').length;
+          return`<div class="mc-card">
+            <div class="mc-card-top"><div class="av av-lg" style="background:${m.color}">${m.initials}</div>
+            <div><div class="mc-name">${m.name}</div><div class="mc-role-txt">${m.title}</div>
+            <span class="rpill ${RP_CLS[m.role]}" style="font-size:10px;margin-top:3px;display:inline-flex">${ROLES[m.role]}</span></div></div>
+            <div class="mst">
+              <div class="ms"><div class="ms-val">${as}</div><div class="ms-lbl">Atanan</div></div>
+              <div class="ms"><div class="ms-val" style="color:var(--analytics)">${ip}</div><div class="ms-lbl">Devam</div></div>
+              <div class="ms"><div class="ms-val" style="color:var(--training)">${dn}</div><div class="ms-lbl">Tamam</div></div>
+            </div>
+          </div>`;
+        }).join('')}
+        ${isAdmin?`<div class="mc-card" style="border:2px dashed var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;min-height:100px;cursor:pointer" onclick="openAddMember('${team}')">
+          <div style="text-align:center;color:var(--text-hint)"><div style="font-size:20px;margin-bottom:3px">＋</div><div style="font-size:12px;font-weight:600">Ekle</div></div>
+        </div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('btn-add-member').style.display=S.currentUser.role==='admin'?'':'none';
+}
+
+// ── MINE ─────────────────────────────────────────
+function renderMine(){
+  const u=S.currentUser;
+  document.getElementById('mine-greet').textContent=`Hoş geldiniz, ${u.name} 👋`;
+  const myWorks=S.works.filter(w=>w.assignees.includes(u.id)||w.creator===u.id);
+  const myReqs=S.requests.filter(r=>r.requester===u.id);
+  document.getElementById('mine-works-table').innerHTML=myWorks.length?myWorks.map(w=>`
+    <tr onclick="openDetail('${w.id}')">
+      <td><span class="tid">${w.id}</span></td>
+      <td><span class="ttitle">${w.title}</span></td>
+      <td>${statusBadge(w.status)}</td>
+      <td>${slaChip(w)}</td>
+    </tr>`).join(''):`<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-hint);font-size:13px">İş yok</td></tr>`;
+  document.getElementById('mine-req-table').innerHTML=myReqs.length?myReqs.map(r=>`
+    <tr onclick="openReqDetail('${r.id}')">
+      <td><span class="tid">${r.id}</span></td>
+      <td><span class="ttitle">${r.title}</span></td>
+      <td><span class="type-badge t-request" style="font-size:10px">${r.type}</span></td>
+      <td>${statusBadge(r.status)}</td>
+    </tr>`).join(''):`<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-hint);font-size:13px">Talep yok</td></tr>`;
+}
+
+// ── SETTINGS ─────────────────────────────────────
+function renderSettings(){
+  const pm={c:'Kritik',h:'Yüksek',m:'Orta',l:'Düşük'};
+  Object.entries(pm).forEach(([k,v])=>{const s=document.getElementById('sla-'+k);if(s)s.value=S.sla[v]||'';const w=document.getElementById('slw-'+k);if(w)w.value=S.slaWarn[v]||75;});
+  Object.keys(S.pa).forEach(k=>{const el=document.getElementById('pa-'+k);if(el)el.value=S.pa[k]||'';});
+  const ut=document.getElementById('users-tbl');
+  if(ut)ut.innerHTML=`<table style="width:100%"><thead><tr><th>Ad</th><th>E-posta</th><th>Rol</th><th>Ekip</th></tr></thead><tbody>
+    ${S.users.map(u=>`<tr><td><div style="display:flex;align-items:center;gap:7px"><div class="av" style="background:${u.color}">${u.initials}</div><span style="font-weight:600;font-size:13px">${u.name}</span></div></td>
+    <td style="font-size:11px;color:var(--text-soft);font-family:'JetBrains Mono',monospace">${u.email}</td>
+    <td><span class="rpill ${RP_CLS[u.role]}">${ROLES[u.role]}</span></td><td style="font-size:12.5px">${u.team||'—'}</td></tr>`).join('')}
+  </tbody></table>`;
+  // Deadline guide
+  const dg=document.getElementById('deadline-guide');
+  if(dg) dg.innerHTML=buildDeadlineGuide();
+  // SP Schema
+  const sp=document.getElementById('sp-schema');
+  if(sp)sp.innerHTML=`<details style="border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+    <summary style="padding:8px 12px;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg)">📋 LTAR_İşler — Yeni Alanlar (${10} sütun)</summary>
+    <table style="width:100%"><thead><tr><th>Sütun</th><th>Tür</th><th>Not</th></tr></thead><tbody>
+      ${[['IsTuru','Seçim','Planlı/Rutin/Toplantı/Dış Talep'],['Ekip','Seçim','Lean/Training/Analytics'],['Oncelik','Seçim','Kritik/Yüksek/Orta/Düşük'],['SLASaati','Sayı','Override'],['Tekrar','Seçim','daily/weekly/monthly'],['Atananlar','Kişi (çoklu)','M365'],['Gozlemciler','Çok satır','e-posta listesi'],['Etiketler','Tek satır','virgülle'],['SonTarih','Tarih','deadline'],['Kaynak','Tek satır','REQ-XXX varsa']].map(([c,t,n])=>`<tr><td><code style="font-family:'JetBrains Mono';font-size:11px;background:var(--arvato-light);color:var(--arvato-dark);padding:1px 5px;border-radius:3px">${c}</code></td><td style="font-size:12px">${t}</td><td style="font-size:11.5px;color:var(--text-soft)">${n}</td></tr>`).join('')}
+    </tbody></table></details>`;
+  updateLensCode();
+}
+function saveSLA(){const pm={c:'Kritik',h:'Yüksek',m:'Orta',l:'Düşük'};Object.entries(pm).forEach(([k,v])=>{const s=document.getElementById('sla-'+k);if(s)S.sla[v]=parseInt(s.value)||S.sla[v];const w=document.getElementById('slw-'+k);if(w)S.slaWarn[v]=parseInt(w.value)||75;});save();toast('SLA kaydedildi','ok');}
+function savePA(){Object.keys(S.pa).forEach(k=>{const el=document.getElementById('pa-'+k);if(el)S.pa[k]=el.value;});save();toast('Webhook URL\'leri kaydedildi','ok');}
+function stab(sec,el){document.querySelectorAll('.set-sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.set-mi').forEach(m=>m.classList.remove('active'));document.getElementById('sec-'+sec).classList.add('active');el.classList.add('active');}
+function buildDeadlineGuide(){
+  return `<div style="display:flex;flex-direction:column;gap:10px">
+    <div style="background:var(--sidebar-bg);border-radius:var(--r);padding:13px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#93c5fd;white-space:pre;overflow-x:auto">` +
+`// Power Automate — Zamanlama Akışı Yapısı
+// Adım 1: Tetikleyici
+Zamanlama: Her gün saat 08:00 (Recurrence)
+
+// Adım 2: HTTP POST → LTAR Flow Deadline Webhook
+İstek Gövdesi (JSON):
+{
+  "source": "PowerAutomate_Scheduler",
+  "date": "@{utcNow()}",
+  "triggerType": "deadline_check"
+}
+
+// Adım 3: Flow içinde SharePoint'ten işleri al
+Bağlantı: GEMBAWalk71 → LTAR_İşler listesi
+Filtre: Durum ne 'Tamamlandı' ne 'İptal'
+         VE SonTarih dolu
+
+// Adım 4: Koşul dallanması
+IF SonTarih < Bugün:
+  → "TERMİN GEÇTİ" maili gönder (kırmızı)
+ELSE IF SonTarih - Bugün <= 2 gün:
+  → "TERMİN YAKINLAŞIYOR" maili gönder (amber)
+ELSE IF SonTarih - Bugün <= 5 gün:
+  → "TERMİN HATIRLATMA" maili gönder (mavi)
+
+// Adım 5: Mail alıcıları
+To: Atanan kişiler (Atananlar sütunundan)
+Cc: Umay Kayaalp (umay.kayaalp@arvato.com)
+Subject: [LTAR Flow] ⏰ {İş ID} — {Başlık} termin {durum}` +
+`</div>
+    <div style="background:var(--arvato-light);border:1px solid #bfdbfe;border-radius:var(--r);padding:11px 13px;font-size:12.5px;color:var(--arvato-dark)">
+      💡 <strong>Sadece 1 akış yeterli:</strong> Tek bir zamanlama akışı tüm ekiplerin tüm işlerini tarar. Ekip bazında ayrı akış gerekmez.
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+      <thead><tr style="background:var(--bg)"><th style="padding:8px 11px;text-align:left;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-soft)">Tetikleyici</th><th style="padding:8px 11px;text-align:left;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-soft)">Mail Alıcısı</th><th style="padding:8px 11px;text-align:left;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-soft)">Renk</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)">5 gün kaldı</td><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)">Atananlar</td><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)"><span style="background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">🔵 Hatırlatma</span></td></tr>
+        <tr><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)">2 gün kaldı</td><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)">Atananlar + Ekip Yöneticisi</td><td style="padding:9px 11px;border-bottom:1px solid var(--border-lt)"><span style="background:#fffbeb;color:#92400e;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">🟡 Uyarı</span></td></tr>
+        <tr><td style="padding:9px 11px">Termin geçti</td><td style="padding:9px 11px">Atananlar + Ekip Yöneticisi + Umay</td><td style="padding:9px 11px"><span style="background:#fef2f2;color:#b91c1c;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">🔴 İhlal</span></td></tr>
+      </tbody>
+    </table>
+  </div>`;
+}
+function updateLensCode(){
+  const url=(document.getElementById('portal-url')||{}).value||'https://analyticsandreporting.github.io/LENS/ltar-flow.html';
+  const lc=document.getElementById('lens-code');
+  if(lc)lc.textContent=`// portal.html — modül kartlarına ekle
+{
+  id: 'ltar-flow',
+  title: 'LTAR Flow',
+  subtitle: 'İş & Talep Yönetimi',
+  icon: '📋',
+  color: '#0078BE',
+  href: '${url}',
+  teams: ['Lean', 'Training', 'Analytics & Reporting']
+}`;
+  const ic=document.getElementById('iframe-code');
+  if(ic)ic.textContent=`<!-- LENS portal.html içinde -->
+<iframe src="${url}"
+  width="100%" height="100%"
+  style="border:none;border-radius:12px"
+  title="LTAR Flow · İş Yönetimi"/>`;
+}
+function copyCode(id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.textContent).then(()=>toast('Kopyalandı','ok')).catch(()=>toast('Manuel kopyalayın','info'));}
+
+// ── NEW WORK ─────────────────────────────────────
+function openNewWork(){
+  S.editingId=null;
+  document.getElementById('work-modal-title').textContent='Yeni İş';
+  document.getElementById('w-submit').textContent='İş Oluştur';
+  document.getElementById('w-submit').onclick=submitWork;
+  ['w-title','w-desc','w-tags'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('w-team').value='';document.getElementById('w-prio').value='Orta';
+  document.getElementById('w-sla').value='';document.getElementById('w-due').value='';document.getElementById('w-recur').value='';
+  document.getElementById('w-sla-preview').style.display='none';
+  const u=S.currentUser;
+  document.getElementById('w-assign-wrap').style.display=(u.role==='admin'||u.role==='manager'||u.role==='member')?'':'none';
+  document.getElementById('w-sla-wrap').style.display=u.role==='admin'?'':'none';
+  populateCats();renderAvChips('w-av-chips',[]);openOv('ov-work');
+}
+function onTeamChange(){renderAvChips('w-av-chips',[]);updateSLAPreview();}
+function updateSLAPreview(){
+  const prio=document.getElementById('w-prio').value,ov=parseInt(document.getElementById('w-sla').value);
+  const hrs=ov||S.sla[prio]||72;
+  const box=document.getElementById('w-sla-preview'),txt=document.getElementById('w-sla-txt');
+  if(txt){txt.textContent=`⏱ SLA: ${hrs} saat (${fmtDur(hrs*3600000)})`;box.style.display='';}
+}
+function renderAvChips(cid,selected){
+  const team=document.getElementById('w-team')?document.getElementById('w-team').value:'';
+  const candidates=S.users.filter(u=>u.role==='member'&&(!team||u.team===team));
+  const c=document.getElementById(cid);if(!c)return;
+  c.innerHTML=candidates.map(u=>`
+    <div class="av-chip ${selected.includes(u.id)?'sel':''}" onclick="this.classList.toggle('sel')">
+      <div class="av" style="background:${u.color};width:16px;height:16px;font-size:7px">${u.initials}</div>${u.name.split(' ')[0]}
+    </div>`).join('')||'<span style="font-size:12px;color:var(--text-hint)">Önce ekip seçin</span>';
+}
+function getSelAv(cid){return[...document.querySelectorAll(`#${cid} .av-chip.sel`)].map(el=>{const txt=el.textContent.trim();const m=S.users.find(u=>txt.startsWith(u.name.split(' ')[0]));return m?m.id:null;}).filter(Boolean);}
+function populateCats(){} // kategori dropdown'ı yok şu an
+
+function submitWork(){
+  const title=document.getElementById('w-title').value.trim(),team=document.getElementById('w-team').value;
+  if(!title){toast('Başlık zorunludur','err');return;}if(!team){toast('Ekip seçiniz','err');return;}
+  const u=S.currentUser,id='LTF-'+String(S.counter).padStart(3,'0');S.counter++;
+  const assignees=getSelAv('w-av-chips');
+  const work={
+    id,title,desc:document.getElementById('w-desc').value.trim(),
+    type:document.getElementById('w-type').value,team,
+    priority:document.getElementById('w-prio').value,status:'Açık',
+    assignees,observers:[],creator:u.id,
+    slaHrs:parseInt(document.getElementById('w-sla').value)||null,
+    due:document.getElementById('w-due').value,
+    tags:document.getElementById('w-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    recur:document.getElementById('w-recur').value,
+    attachments:[],comments:[],created:new Date().toISOString(),updated:new Date().toISOString()
+  };
+  S.works.unshift(work);addAct(`${id} oluşturuldu: "${title}"`,'📌');
+  triggerNotif('new',work);save();closeOv('ov-work');buildNav();toast(`${id} oluşturuldu`,'ok');
+  renderDashboard();
+  if(document.getElementById('pg-works').classList.contains('active'))renderWorks();
+  if(document.getElementById('pg-kanban').classList.contains('active'))renderKanban();
+  if(document.getElementById('pg-mine').classList.contains('active'))renderMine();
+}
+function editWork(id){
+  const w=S.works.find(x=>x.id===id);if(!w)return;S.editingId=id;openNewWork();
+  setTimeout(()=>{
+    document.getElementById('work-modal-title').textContent='İşi Düzenle';
+    document.getElementById('w-submit').textContent='Güncelle';
+    document.getElementById('w-submit').onclick=saveEditWork;
+    document.getElementById('w-title').value=w.title;document.getElementById('w-desc').value=w.desc||'';
+    document.getElementById('w-type').value=w.type;document.getElementById('w-team').value=w.team;
+    document.getElementById('w-prio').value=w.priority;document.getElementById('w-sla').value=w.slaHrs||'';
+    document.getElementById('w-due').value=w.due||'';document.getElementById('w-tags').value=(w.tags||[]).join(', ');
+    document.getElementById('w-recur').value=w.recur||'';
+    renderAvChips('w-av-chips',w.assignees);updateSLAPreview();
+  },50);
+}
+function saveEditWork(){
+  const w=S.works.find(x=>x.id===S.editingId);if(!w)return;
+  w.title=document.getElementById('w-title').value.trim();w.desc=document.getElementById('w-desc').value.trim();
+  w.type=document.getElementById('w-type').value;w.team=document.getElementById('w-team').value;
+  w.priority=document.getElementById('w-prio').value;w.slaHrs=parseInt(document.getElementById('w-sla').value)||null;
+  w.due=document.getElementById('w-due').value;w.tags=document.getElementById('w-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  w.recur=document.getElementById('w-recur').value;
+  const na=getSelAv('w-av-chips');if(na.length)w.assignees=na;
+  w.updated=new Date().toISOString();addAct(`${w.id} güncellendi`,'✏️');save();closeOv('ov-work');toast(`${w.id} güncellendi`,'ok');
+  renderDashboard();if(document.getElementById('pg-works').classList.contains('active'))renderWorks();if(document.getElementById('pg-kanban').classList.contains('active'))renderKanban();
+}
+function deleteWork(id){if(!confirm(`${id} silinsin mi?`))return;S.works=S.works.filter(w=>w.id!==id);addAct(`${id} silindi`,'🗑️');save();buildNav();renderWorks();renderDashboard();toast(`${id} silindi`,'info');}
+
+// ── NEW REQUEST ───────────────────────────────────
+function openNewRequest(){['r-title','r-desc','r-dept'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('r-type').value='Ölçüm';document.getElementById('r-prio').value='Orta';document.getElementById('r-due').value='';openOv('ov-request');}
+function submitRequest(){
+  const title=document.getElementById('r-title').value.trim();
+  if(!title){toast('Başlık zorunludur','err');return;}
+  const u=S.currentUser,type=document.getElementById('r-type').value;
+  const id='REQ-'+String(S.reqCounter).padStart(3,'0');S.reqCounter++;
+  const req={
+    id,title,desc:document.getElementById('r-desc').value.trim(),
+    type,priority:document.getElementById('r-prio').value,
+    status:'Beklemede',requester:u.id,
+    dept:document.getElementById('r-dept').value,
+    targetTeam:REQ_TEAM[type]||'',
+    assignees:[],observers:[],comments:[],attachments:[],
+    created:new Date().toISOString(),updated:new Date().toISOString(),
+    due:document.getElementById('r-due').value
+  };
+  S.requests.unshift(req);addAct(`${id} talebi oluşturuldu: "${title}"`,'📬');
+  save();closeOv('ov-request');buildNav();toast(`${id} gönderildi`,'ok');
+  if(document.getElementById('pg-requests').classList.contains('active'))renderRequests();
+  if(document.getElementById('pg-mine').classList.contains('active'))renderMine();
+  renderDashboard();
+}
+function deleteReq(id){if(!confirm(`${id} silinsin mi?`))return;S.requests=S.requests.filter(r=>r.id!==id);addAct(`${id} talep silindi`,'🗑️');save();buildNav();renderRequests();renderDashboard();toast(`${id} silindi`,'info');}
+
+// ── DETAIL MODAL ──────────────────────────────────
+function openDetail(id){
+  const w=S.works.find(x=>x.id===id);if(!w)return;S.currentId=id;
+  document.getElementById('det-id').textContent=w.id;
+  document.getElementById('det-modal-title').textContent=w.title;
+  document.getElementById('det-title').textContent=w.title;
+  document.getElementById('det-desc').textContent=w.desc||'Açıklama girilmemiş.';
+  document.getElementById('det-type').innerHTML=`<span class="type-badge ${TYPE_CLS[w.type]||'t-planned'}">${TYPE_ICON[w.type]} ${w.type}</span>`;
+  document.getElementById('det-team').innerHTML=teamTag(w.team);
+  document.getElementById('det-due').textContent=w.due?fmtDate(w.due):'—';
+  document.getElementById('det-recur').textContent=w.recur||'Tekrar yok';
+  const cr=S.users.find(u=>u.id===w.creator);document.getElementById('det-creator').textContent=cr?cr.name:w.creator;
+  document.getElementById('det-tags').innerHTML=(w.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')||'—';
+  const editable=canEdit();
+  document.getElementById('det-status').value=w.status;document.getElementById('det-status').disabled=!editable;
+  document.getElementById('det-prio').value=w.priority;document.getElementById('det-prio').disabled=!editable;
+  const canAssign=S.currentUser.role==='admin'||S.currentUser.role==='manager'||S.currentUser.role==='member';
+  const ag=document.getElementById('det-av-chips');
+  if(canAssign){ag.innerHTML=S.users.filter(u=>u.role==='member'&&u.team===w.team).map(u=>`
+    <div class="av-chip ${w.assignees.includes(u.id)?'sel':''}" onclick="toggleDetAv('${u.id}',this)">
+      <div class="av" style="background:${u.color};width:16px;height:16px;font-size:7px">${u.initials}</div>${u.name.split(' ')[0]}
+    </div>`).join('');}
+  else{ag.innerHTML=`<div class="av-stack">${w.assignees.map(aid=>{const m=S.users.find(u=>u.id===aid);return m?`<div class="av" style="background:${m.color}" title="${m.name}">${m.initials}</div>`:''}).join('')}</div>`;}
+  updateDetSLA(w);renderAtts(w);renderObs(w);renderCmts(w);
+  document.getElementById('det-actions').innerHTML=editable?`
+    <button class="btn btn-secondary btn-sm" onclick="editWork('${w.id}');closeOv('ov-detail')">✏️ Düzenle</button>
+    ${S.currentUser.role==='admin'?`<button class="btn btn-danger btn-sm" onclick="deleteWork('${w.id}');closeOv('ov-detail')">🗑️ Sil</button>`:''}
+  `:'';
+  openOv('ov-detail');
+}
+
+function openReqDetail(id){
+  // Talep detayını iş gibi aç — status güncelleme önemli
+  const r=S.requests.find(x=>x.id===id);if(!r)return;S.currentId=id;
+  document.getElementById('det-id').textContent=r.id;
+  document.getElementById('det-modal-title').textContent=r.title;
+  document.getElementById('det-title').textContent=r.title;
+  document.getElementById('det-desc').textContent=r.desc||'Açıklama girilmemiş.';
+  document.getElementById('det-type').innerHTML=`<span class="type-badge t-request">📬 ${r.type}</span>`;
+  document.getElementById('det-team').innerHTML=teamTag(r.targetTeam);
+  document.getElementById('det-due').textContent=r.due?fmtDate(r.due):'—';
+  document.getElementById('det-recur').textContent='—';
+  const rq=S.users.find(u=>u.id===r.requester);document.getElementById('det-creator').textContent=`${rq?rq.name:r.requester} (${r.dept||'?'})`;
+  document.getElementById('det-tags').innerHTML='—';
+  const editable=canEdit();
+  // Status için talep statüleri
+  const detStatus=document.getElementById('det-status');
+  detStatus.innerHTML='<option>Beklemede</option><option>Değerlendiriliyor</option><option>Devam Ediyor</option><option>Tamamlandı</option><option>Reddedildi</option>';
+  detStatus.value=r.status;detStatus.disabled=!editable;
+  document.getElementById('det-prio').value=r.priority;document.getElementById('det-prio').disabled=!editable;
+  const ag=document.getElementById('det-av-chips');
+  ag.innerHTML=S.users.filter(u=>u.role==='member').map(u=>`
+    <div class="av-chip ${(r.assignees||[]).includes(u.id)?'sel':''}" onclick="toggleDetAvReq('${u.id}',this)">
+      <div class="av" style="background:${u.color};width:16px;height:16px;font-size:7px">${u.initials}</div>${u.name.split(' ')[0]}
+    </div>`).join('');
+  // SLA
+  const chip=document.getElementById('det-sla-chip'),bar=document.getElementById('det-sla-bar'),txt=document.getElementById('det-sla-txt');
+  chip.innerHTML='<span class="sla sla-done">Talep</span>';bar.style.width='0%';txt.textContent='';
+  renderAtts(r);renderObs(r);renderCmts(r);
+  document.getElementById('det-actions').innerHTML=editable?`
+    <button class="btn btn-secondary btn-sm" onclick="acceptReq('${r.id}')">✅ Kabul Et → İşe Dönüştür</button>
+    <button class="btn btn-danger btn-sm" onclick="rejectReq('${r.id}')">❌ Reddet</button>
+  `:'';
+  openOv('ov-detail');
+}
+
+function acceptReq(id){
+  const r=S.requests.find(x=>x.id===id);if(!r)return;
+  r.status='Devam Ediyor';r.updated=new Date().toISOString();
+  // İşe dönüştür
+  const wid='LTF-'+String(S.counter).padStart(3,'0');S.counter++;
+  const work={id:wid,title:r.title,desc:r.desc,type:'Dış Talep',team:r.targetTeam||'',priority:r.priority,status:'Açık',assignees:r.assignees||[],observers:r.observers||[],creator:r.requester,slaHrs:null,due:r.due,tags:[r.type],recur:'',attachments:[],comments:[{author:S.currentUser.id,text:`REQ ${r.id} talebinden oluşturuldu.`,time:new Date().toISOString()}],created:new Date().toISOString(),updated:new Date().toISOString()};
+  S.works.unshift(work);addAct(`${r.id} kabul → ${wid} oluşturuldu`,'✅');
+  save();closeOv('ov-detail');buildNav();renderDashboard();toast(`${r.id} → ${wid} oluşturuldu`,'ok');
+}
+function rejectReq(id){
+  const r=S.requests.find(x=>x.id===id);if(!r)return;
+  if(!confirm(`${id} talebi reddedilsin mi?`))return;
+  r.status='Reddedildi';r.updated=new Date().toISOString();
+  addAct(`${r.id} reddedildi`,'❌');save();closeOv('ov-detail');renderRequests();buildNav();toast(`${id} reddedildi`,'info');
+}
+
+function toggleDetAv(uid,el){
+  el.classList.toggle('sel');
+  const w=S.works.find(x=>x.id===S.currentId);if(!w)return;
+  w.assignees=[...document.querySelectorAll('#det-av-chips .av-chip.sel')].map(chip=>{const txt=chip.textContent.trim();const m=S.users.find(u=>txt.startsWith(u.name.split(' ')[0]));return m?m.id:null;}).filter(Boolean);
+  w.updated=new Date().toISOString();addAct(`${w.id} atama güncellendi`,'👤');triggerNotif('assign',w);save();toast('Atama güncellendi','ok');
+}
+function toggleDetAvReq(uid,el){
+  el.classList.toggle('sel');
+  const r=S.requests.find(x=>x.id===S.currentId);if(!r)return;
+  if(!r.assignees)r.assignees=[];
+  r.assignees=[...document.querySelectorAll('#det-av-chips .av-chip.sel')].map(chip=>{const txt=chip.textContent.trim();const m=S.users.find(u=>txt.startsWith(u.name.split(' ')[0]));return m?m.id:null;}).filter(Boolean);
+  r.updated=new Date().toISOString();save();toast('Atama güncellendi','ok');
+}
+
+function updField(field,val){
+  const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w)return;
+  const old=w[field];w[field]=val;w.updated=new Date().toISOString();
+  addAct(`${w.id} ${field==='status'?'durum':'öncelik'}: ${old} → ${val}`,'🔄');
+  if(S.works.find(x=>x.id===S.currentId))triggerNotif(field==='status'?'status':'assign',w,{old,val});
+  save();buildNav();renderDashboard();
+  if(document.getElementById('pg-kanban').classList.contains('active'))renderKanban();
+  updateDetSLA(w);toast('Güncellendi','ok');
+}
+
+function updateDetSLA(w){
+  const{state,pct,label}=getSLAInfo(w);
+  const chip=document.getElementById('det-sla-chip'),bar=document.getElementById('det-sla-bar'),txt=document.getElementById('det-sla-txt');
+  if(state==='done'){chip.innerHTML='<span class="sla sla-done">Kapalı</span>';bar.style.width='100%';bar.style.background='var(--border)';txt.textContent='';}
+  else{const color=state==='breach'?'var(--p-critical)':state==='warn'?'var(--analytics)':'var(--training)';chip.innerHTML=`<span class="sla ${state==='breach'?'sla-breach sla-pulse':state==='warn'?'sla-warn':'sla-ok'}">${label}</span>`;bar.style.width=pct+'%';bar.style.background=color;txt.textContent=`Toplam: ${getSLAHrs(w)}sa · %${Math.round(pct)} geçti`;}
+}
+
+function renderCmts(w){
+  const c=document.getElementById('det-cmts');if(!c)return;
+  if(!w.comments||!w.comments.length){c.innerHTML='<div style="color:var(--text-hint);font-size:12.5px;padding:4px 0">Yorum yok.</div>';return;}
+  c.innerHTML=w.comments.map(cm=>{const m=S.users.find(u=>u.id===cm.author);return`
+    <div class="cmt-item"><div class="av av-md" style="background:${m?m.color:'#64748b'}">${m?m.initials:'?'}</div>
+    <div style="flex:1"><div><span class="cmt-who">${m?m.name:cm.author}</span><span class="cmt-when">${timeAgo(cm.time)}</span></div>
+    <div class="cmt-txt">${cm.text}</div></div></div>`;}).join('');
+}
+function addCmt(){
+  const txt=document.getElementById('det-cmt-inp').value.trim();if(!txt)return;
+  const w=S.works.find(x=>x.id===S.currentId)||S.requests.find(x=>x.id===S.currentId);if(!w)return;
+  if(!w.comments)w.comments=[];
+  w.comments.push({author:S.currentUser.id,text:txt,time:new Date().toISOString()});
+  w.updated=new Date().toISOString();document.getElementById('det-cmt-inp').value='';
+  addAct(`${w.id} yorumlandı`,'💬');triggerNotif('comment',w,{comment:txt});save();renderCmts(w);toast('Yorum eklendi','ok');
+}
+
+// ── MEMBER ────────────────────────────────────────
+function openAddMember(team=''){S.editingMemberId=null;['m-name','m-email','m-title'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('m-role').value='member';document.getElementById('m-team').value=team;openOv('ov-member');}
+function saveMember(){
+  const name=document.getElementById('m-name').value.trim(),email=document.getElementById('m-email').value.trim().toLowerCase();
+  if(!name||!email){toast('Ad ve e-posta zorunludur','err');return;}
+  if(S.users.find(u=>u.email===email&&u.id!==S.editingMemberId)){toast('E-posta kayıtlı','err');return;}
+  S.users.push({id:'u-'+Date.now(),name,email,role:document.getElementById('m-role').value,team:document.getElementById('m-team').value,title:document.getElementById('m-title').value,color:AV_COLORS[S.users.length%AV_COLORS.length],initials:name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()});
+  save();closeOv('ov-member');renderTeam();renderSettings();toast('Kullanıcı eklendi','ok');
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────
+function mkDeadlineMail(work, daysLeft){
+  const isOverdue = daysLeft < 0;
+  const isUrgent  = daysLeft >= 0 && daysLeft <= 2;
+  const color     = isOverdue ? '#B91C1C' : isUrgent ? '#D97706' : '#0078BE';
+  const bgColor   = isOverdue ? '#FEF2F2' : isUrgent ? '#FFFBEB' : '#EFF6FF';
+  const label     = isOverdue ? 'TERMİN GEÇTİ' : isUrgent ? 'TERMİN YAKINLAŞIYOR' : 'TERMİN HATIRLATMASI';
+  const icon      = isOverdue ? '🔴' : isUrgent ? '🟡' : '🔵';
+  const dueTxt    = work.due ? new Date(work.due).toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'}) : '—';
+  const assigneeNames = (work.assignees||[]).map(id=>{const u=S.users.find(x=>x.id===id);return u?u.name:id;}).join(', ');
+  return {
+    konu: `[LTAR Flow] ${icon} ${work.id} — ${work.title} | ${label}`,
+    html: `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f0f4f8;font-family:Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f0f4f8"><tr><td align="center" style="padding:24px 0">
+<table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="border-radius:12px;overflow:hidden;border:1px solid #DDE3EC">
+  <tr><td bgcolor="#1A2E44" style="padding:20px 28px">
+    <table width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td><span style="font-size:18px;font-weight:700;color:#ffffff;letter-spacing:-.3px">LTAR Flow</span><br>
+        <span style="font-size:11px;color:rgba(255,255,255,.5)">Lean · Training · Analytics & Reporting · LENS</span></td>
+      <td align="right"><span style="background:${color};color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700">${icon} ${label}</span></td>
+    </tr></table>
+  </td></tr>
+  <tr><td bgcolor="${bgColor}" style="padding:16px 28px;border-bottom:2px solid ${color}">
+    <table width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td><span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:${color}">İŞ ID</span><br>
+        <span style="font-family:Courier New,monospace;font-size:14px;font-weight:700;color:${color}">${work.id}</span></td>
+      <td align="center"><span style="font-size:32px;font-weight:800;color:${color}">${Math.abs(daysLeft)}</span><br>
+        <span style="font-size:11px;color:${color};font-weight:600">${isOverdue?'GÜN GEÇTİ':'GÜN KALDI'}</span></td>
+      <td align="right"><span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:${color}">TERMİN</span><br>
+        <span style="font-size:13px;font-weight:700;color:${color}">${dueTxt}</span></td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="padding:22px 28px">
+    <p style="font-size:16px;font-weight:700;color:#0D1F2D;margin:0 0 8px">${work.title}</p>
+    <p style="font-size:13px;color:#64748B;line-height:1.6;margin:0 0 18px">${work.desc||'—'}</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #DDE3EC;border-radius:8px;overflow:hidden">
+      <tr bgcolor="#F0F4F8"><td style="padding:8px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#64748B">Bilgi</td><td style="padding:8px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#64748B">Değer</td></tr>
+      <tr><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#64748B;font-weight:600">Ekip</td><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#0D1F2D">${work.team}</td></tr>
+      <tr><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#64748B;font-weight:600">Atanan</td><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#0D1F2D">${assigneeNames||'—'}</td></tr>
+      <tr><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#64748B;font-weight:600">Tür</td><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#0D1F2D">${work.type}</td></tr>
+      <tr><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#64748B;font-weight:600">Öncelik</td><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#0D1F2D">${work.priority}</td></tr>
+      <tr><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#64748B;font-weight:600">Durum</td><td style="padding:9px 14px;border-top:1px solid #EEF1F5;font-size:12.5px;color:#0D1F2D">${work.status}</td></tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px"><tr><td align="center">
+      <a href="#" style="background:#0078BE;color:white;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;display:inline-block">LTAR Flow'da Aç →</a>
+    </td></tr></table>
+  </td></tr>
+  <tr><td bgcolor="#F0F4F8" style="padding:12px 28px;border-top:1px solid #EEF1F5">
+    <p style="font-size:11px;color:#94A3B8;margin:0;text-align:center">Bu mail LTAR Flow otomatik bildirim sistemi tarafından gönderildi · LENS · Arvato Supply Chain Solutions</p>
+  </td></tr>
+</table></td></tr></table></body></html>`
+  };
+}
+
+async function checkDeadlinesAndNotify(){
+  const url = S.pa.deadline;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let notified = 0;
+  for(const work of S.works){
+    if(!work.due || work.status==='Tamamlandı' || work.status==='İptal') continue;
+    const due = new Date(work.due); due.setHours(0,0,0,0);
+    const daysLeft = Math.ceil((due - today) / 86400000);
+    // 5 gün, 2 gün veya geçmiş
+    if(daysLeft <= 5){
+      const mail = mkDeadlineMail(work, daysLeft);
+      const recips = new Set();
+      (work.assignees||[]).forEach(id=>{const u=S.users.find(x=>x.id===id);if(u)recips.add(u.email);});
+      if(daysLeft <= 0 || daysLeft <= 2){
+        // Yöneticileri de ekle
+        S.users.filter(u=>(u.role==='manager'||u.role==='admin')&&u.team===work.team).forEach(u=>recips.add(u.email));
+        if(daysLeft <= 0) recips.add('umay.kayaalp@arvato.com');
+      }
+      if(url){
+        try{
+          await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+            isId:work.id, isBaslik:work.title, ekip:work.team,
+            terminTarihi:work.due, kalanGun:daysLeft,
+            durum:daysLeft<0?'overdue':daysLeft<=2?'urgent':'reminder',
+            alicilar:[...recips],
+            mailKonu:mail.konu, mailHtml:mail.html
+          })});
+          notified++;
+        }catch(e){}
+      }
+    }
+  }
+  return notified;
+}
+
+async function triggerNotif(type,item,extra={}){
+  const url=S.pa[type];if(!url)return;
+  const recips=new Set();
+  const cr=S.users.find(u=>u.id===item.creator);if(cr)recips.add(cr.email);
+  (item.assignees||[]).forEach(id=>{const u=S.users.find(x=>x.id===id);if(u)recips.add(u.email);});
+  (item.observers||[]).forEach(e=>recips.add(e));
+  try{await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,id:item.id,title:item.title,recipients:[...recips],timestamp:new Date().toISOString(),...extra})});}catch(e){}
+}
+
+// ── HELPERS ───────────────────────────────────────
+function canEdit(){const r=S.currentUser.role;return r==='admin'||r==='manager'||r==='member';}
+function statusBadge(s){return`<span class="badge ${STAT_MAP[s]||'b-open'}">${s}</span>`;}
+function teamTag(t){const c=TEAM_C[t]||'#64748b',lt=TEAM_LT[t]||'#f8fafc';return`<span class="team-tag" style="background:${lt};color:${c};border:1px solid ${c}25">${t||'—'}</span>`;}
+function avStack(ids){if(!ids||!ids.length)return`<span style="font-size:12px;color:var(--text-hint)">—</span>`;return`<div class="av-stack">${ids.slice(0,4).map(id=>{const m=S.users.find(u=>u.id===id);return m?`<div class="av" style="background:${m.color}" title="${m.name}">${m.initials}</div>`:''}).join('')}${ids.length>4?`<div class="av" style="background:var(--text-hint)">+${ids.length-4}</div>`:''}</div>`;}
+function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('tr-TR',{day:'2-digit',month:'short',year:'numeric'});}
+function timeAgo(d){const diff=Date.now()-new Date(d).getTime(),m=Math.floor(diff/60000);if(m<1)return'az önce';if(m<60)return m+'dk';const h=Math.floor(m/60);if(h<24)return h+'sa';return Math.floor(h/24)+'g';}
+function addAct(text,icon='📌'){S.activity.push({text,icon,time:new Date().toISOString()});if(S.activity.length>60)S.activity.shift();}
+function gSearch(q){if(!q)return;const f=S.works.filter(w=>w.title.toLowerCase().includes(q.toLowerCase())||w.id.toLowerCase().includes(q.toLowerCase()));if(f.length){nav('works');setTimeout(()=>{document.getElementById('work-search').value=q;filterWorks();},100);}}
+function openOv(id){document.getElementById(id).classList.add('open');}
+function closeOv(id){
+  document.getElementById(id).classList.remove('open');
+  // Talep modalı kapanınca status seçeneğini sıfırla
+  const ds=document.getElementById('det-status');
+  if(ds)ds.innerHTML='<option>Açık</option><option>Devam Ediyor</option><option>İncelemede</option><option>Tamamlandı</option><option>İptal</option>';
+}
+function toast(msg,type='info'){const c=document.getElementById('toast-wrap');const el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML={ok:'✅',err:'❌',info:'ℹ️'}[type]+' '+msg;c.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(13px)';el.style.transition='.3s';setTimeout(()=>el.remove(),300);},3000);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));});
+
+// ── BOOT ──────────────────────────────────────────
+if(!load())seed();
+initLogin();
+setInterval(()=>{if(S.currentUser){buildNav();if(document.getElementById('pg-dashboard').classList.contains('active'))renderDashboard();}},60000);
+</script>
+</body>
+</html>
